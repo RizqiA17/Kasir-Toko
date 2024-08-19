@@ -28,13 +28,6 @@ public class Database {
         try {
             String sql = query;
             rs = conn.stm.executeQuery(sql);
-//            JOptionPane.showMessageDialog(null, rs.next());
-            
-//            if (!rs.next()) {
-//                JOptionPane.showMessageDialog(null, "Wrong Input or Data");
-//                rs = null;
-//            }
-
         } catch (HeadlessException | SQLException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
