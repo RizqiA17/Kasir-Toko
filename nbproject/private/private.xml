@@ -5,12 +5,13 @@
         <group>
             <file>file:/D:/Documents/Pelajaran/Program%20Keahlian/XII/Java/Toko_App/src/Component/Data_Barang.java</file>
             <file>file:/D:/Documents/Pelajaran/Program%20Keahlian/XII/Java/Toko_App/src/toko_app/Login_Form.java</file>
-            <file>file:/D:/Documents/Pelajaran/Program%20Keahlian/XII/Java/Toko_App/src/Main_App/Home_Karyawan.java</file>
-            <file>file:/D:/Documents/Pelajaran/Program%20Keahlian/XII/Java/Toko_App/src/Main_App/Home_Admin.java</file>
+            <file>file:/D:/Documents/Pelajaran/Program%20Keahlian/XII/Java/Toko_App/src/toko_app/Daftar.java</file>
             <file>file:/D:/Documents/Pelajaran/Program%20Keahlian/XII/Java/Toko_App/src/Component/Data_Petugas.java</file>
             <file>file:/D:/Documents/Pelajaran/Program%20Keahlian/XII/Java/Toko_App/src/Main_App/Transaksi.java</file>
+            <file>file:/D:/Documents/Pelajaran/Program%20Keahlian/XII/Java/Toko_App/src/Service/Database.java</file>
             <file>file:/D:/Documents/Pelajaran/Program%20Keahlian/XII/Java/Toko_App/src/Component/Riwayat_Transaksi.java</file>
             <file>file:/D:/Documents/Pelajaran/Program%20Keahlian/XII/Java/Toko_App/src/Component/Stok_Barang.java</file>
+            <file>file:/D:/Documents/Pelajaran/Program%20Keahlian/XII/Java/Toko_App/src/toko_app/Home.java</file>
         </group>
     </open-files>
 </project-private>

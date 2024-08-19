@@ -30,6 +30,7 @@ public class Login_Form extends javax.swing.JFrame {
     public Login_Form() {
         initComponents();
         FullScreen();
+        Home_Admin.main(null);
     }
 
     /**
@@ -247,6 +248,7 @@ public class Login_Form extends javax.swing.JFrame {
         try {
             db.Query("SELECT nama, posisi FROM profile WHERE email = '" + EmailInput.getText() + "' AND password = '" + PassInput.getText() + "'");
             ResultSet rs = db.resultSet();
+//            JOptionPane.showMessageDialog(null, rs.next());
             while (rs.next()) {
                 String posisi = rs.getString("posisi");
                 if ("Kasir".equals(posisi)) {

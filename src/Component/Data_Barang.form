@@ -139,6 +139,7 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="NamaBarangActionPerformed"/>
+                <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="NamaBarangKeyReleased"/>
               </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="Harga">
@@ -162,7 +163,7 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="HargaActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JTextField" name="Stok">
+            <Component class="javax.swing.JTextField" name="StokInput">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="33" green="33" red="33" type="rgb"/>

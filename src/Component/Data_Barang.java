@@ -4,11 +4,24 @@
  */
 package Component;
 
+import Service.Database;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
+
 /**
  *
  * @author smart user
  */
 public class Data_Barang extends javax.swing.JPanel {
+
+    private Database db = new Database();
+    private ResultSet rsNull = null;
 
     /**
      * Creates new form Data_Barang
@@ -34,7 +47,7 @@ public class Data_Barang extends javax.swing.JPanel {
         jLabel4 = new javax.swing.JLabel();
         NamaBarang = new javax.swing.JTextField();
         Harga = new javax.swing.JTextField();
-        Stok = new javax.swing.JTextField();
+        StokInput = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
@@ -81,6 +94,11 @@ public class Data_Barang extends javax.swing.JPanel {
                 NamaBarangActionPerformed(evt);
             }
         });
+        NamaBarang.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                NamaBarangKeyReleased(evt);
+            }
+        });
         jPanel1.add(NamaBarang);
 
         Harga.setBackground(new java.awt.Color(51, 51, 51));
@@ -94,11 +112,11 @@ public class Data_Barang extends javax.swing.JPanel {
         });
         jPanel1.add(Harga);
 
-        Stok.setBackground(new java.awt.Color(51, 51, 51));
-        Stok.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        Stok.setForeground(new java.awt.Color(204, 204, 204));
-        Stok.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jPanel1.add(Stok);
+        StokInput.setBackground(new java.awt.Color(51, 51, 51));
+        StokInput.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        StokInput.setForeground(new java.awt.Color(204, 204, 204));
+        StokInput.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel1.add(StokInput);
 
         jPanel6.add(jPanel1);
 
@@ -226,30 +244,60 @@ public class Data_Barang extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-//        DefaultTableModel tbModel = (DefaultTableModel) jTable1.getModel();
-//        //        tbModel.removeRow(tbModel.getRowCount() - 1);
-//        int lenght = tbModel.getRowCount();
-//        for (int i = 0; i < lenght; i++) {
-//            //            JOptionPane.showMessageDialog(null, tbModel.getRowCount());
-//            try {
-//                tbModel.removeRow(0);
-//            } catch (Exception e) {
-//                JOptionPane.showMessageDialog(null, e);
-//            }
-//        }
-//
-//        String nama = NamaBarang.getText();
-//        int stok = Integer.valueOf(Stok.getText());
-//        int harga = Integer.valueOf(Harga.getText());
-//        String query = "INSERT INTO `gudang` (`id`, `nama_barang`, `harga`, `stok`, `tgl_masuk`) VALUES (null, '" + nama + "', '" + harga + "', '" + stok + "', current_timestamp())";
-//        Database db = new Database();
+        DefaultTableModel tbModel = (DefaultTableModel) jTable1.getModel();
+        //        tbModel.removeRow(tbModel.getRowCount() - 1);
+        int lenght = tbModel.getRowCount();
+        for (int i = 0; i < lenght; i++) {
+            //            JOptionPane.showMessageDialog(null, tbModel.getRowCount());
+            try {
+                tbModel.removeRow(0);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
+        }
+
+        String nama = NamaBarang.getText().toLowerCase();
+        int stok = Integer.valueOf(StokInput.getText());
+        int harga = Integer.valueOf(Harga.getText());
+        String queryGetBarang = "SELECT * FROM `barang` WHERE nama_barang = '" + nama + "'";
+        String query = queryGetBarang;
 //        db.Query(query);
-//        if (db.AddData() > 0) {
+//        ResultSet rs = db.resultSet();
+
+        ResultSet rs = DataBarang(queryGetBarang);
+        try {
+            int idBarang = -1;
+            if (rs.next()) {
+                idBarang = rs.getInt("id");
+                int totalStok = stok + rs.getInt("stok");
+                query = "UPDATE `barang` SET stok = '" + totalStok + "' WHERE id = '" + idBarang + "'";
+                db.Query(query);
+                if (db.AddData() > 0) {
 //            SetDataBarang();
-//            NamaBarang.setText("");
-//            Stok.setText("");
-//            Harga.setText("");
-//        }
+                }
+            } else if (!rs.next()) {
+                query = "INSERT INTO `barang` (`id`, `nama_barang`, `harga`, `stok`) VALUES(NULL, '" + nama + "', '" + harga + "', '" + stok + "')";
+                db.Query(query);
+                if (db.AddData() > 0) {
+                    rs = DataBarang(queryGetBarang);
+//                    JOptionPane.showMessageDialog(null, rs.next());
+                    if (rs.next()) {
+                        idBarang = rs.getInt("id");
+                    }
+                }
+            }
+            query = "INSERT INTO `riwayat_barang` (`id`, `id_barang`, `jumlah_barang`) VALUES (null, '" + idBarang + "', '" + stok + "')";
+            JOptionPane.showMessageDialog(null, query);
+            db.Query(query);
+            if (db.AddData() > 0) {
+                NamaBarang.setText("");
+                StokInput.setText("");
+                Harga.setText("");
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(Data_Barang.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void CariKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_CariKeyReleased
@@ -266,14 +314,38 @@ public class Data_Barang extends javax.swing.JPanel {
 
     private void NamaBarangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NamaBarangActionPerformed
         // TODO add your handling code here:
+
     }//GEN-LAST:event_NamaBarangActionPerformed
 
+    private void NamaBarangKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_NamaBarangKeyReleased
+        // TODO add your handling code here:
+        DefaultTableModel tb = (DefaultTableModel) jTable1.getModel();
+        int col = tb.findColumn("Nama Barang");
+        int totalRow = tb.getRowCount();
+        for (int i = 0; i < totalRow; i++) {
+            JOptionPane.showMessageDialog(null, tb.getValueAt(i, col).toString().toLowerCase());
+            if (tb.getValueAt(i, col).toString().toLowerCase().equals(NamaBarang.getText().toLowerCase())) {
+                JOptionPane.showMessageDialog(null, "Ketemu");
+            }
+        }
+    }//GEN-LAST:event_NamaBarangKeyReleased
+
+    private ResultSet DataBarang(String query) {
+        db.Query(query);
+//        try {
+//            JOptionPane.showMessageDialog(null, query);
+//            JOptionPane.showMessageDialog(null, db.resultSet().next());
+//        } catch (SQLException ex) {
+//            Logger.getLogger(Data_Barang.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+        return db.resultSet();
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField Cari;
     private javax.swing.JTextField Harga;
     private javax.swing.JTextField NamaBarang;
-    private javax.swing.JTextField Stok;
+    private javax.swing.JTextField StokInput;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
