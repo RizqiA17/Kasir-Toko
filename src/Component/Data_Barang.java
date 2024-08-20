@@ -28,6 +28,7 @@ public class Data_Barang extends javax.swing.JPanel {
      */
     public Data_Barang() {
         initComponents();
+        SetDataBarang();
     }
 
     /**
@@ -195,7 +196,7 @@ public class Data_Barang extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Id", "Nama Barang", "Harga", "Stok", "Tanggal Masuk"
+                "No", "Id", "Nama Barang", "Harga", "Stok"
             }
         ) {
             Class[] types = new Class [] {
@@ -216,6 +217,11 @@ public class Data_Barang extends javax.swing.JPanel {
         jTable1.setGridColor(new java.awt.Color(102, 102, 102));
         jTable1.setSelectionBackground(new java.awt.Color(51, 51, 51));
         jTable1.setSelectionForeground(new java.awt.Color(204, 204, 204));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -261,8 +267,6 @@ public class Data_Barang extends javax.swing.JPanel {
         int harga = Integer.valueOf(Harga.getText());
         String queryGetBarang = "SELECT * FROM `barang` WHERE nama_barang = '" + nama + "'";
         String query = queryGetBarang;
-//        db.Query(query);
-//        ResultSet rs = db.resultSet();
 
         ResultSet rs = DataBarang(queryGetBarang);
         try {
@@ -280,14 +284,13 @@ public class Data_Barang extends javax.swing.JPanel {
                 db.Query(query);
                 if (db.AddData() > 0) {
                     rs = DataBarang(queryGetBarang);
-//                    JOptionPane.showMessageDialog(null, rs.next());
                     if (rs.next()) {
                         idBarang = rs.getInt("id");
                     }
                 }
             }
             query = "INSERT INTO `riwayat_barang` (`id`, `id_barang`, `jumlah_barang`) VALUES (null, '" + idBarang + "', '" + stok + "')";
-            JOptionPane.showMessageDialog(null, query);
+//            JOptionPane.showMessageDialog(null, query);
             db.Query(query);
             if (db.AddData() > 0) {
                 NamaBarang.setText("");
@@ -298,14 +301,16 @@ public class Data_Barang extends javax.swing.JPanel {
         } catch (SQLException ex) {
             Logger.getLogger(Data_Barang.class.getName()).log(Level.SEVERE, null, ex);
         }
+        SetDataBarang();
+        Harga.setEditable(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void CariKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_CariKeyReleased
         // TODO add your handling code here:
-//        DefaultTableModel tb = (DefaultTableModel) jTable1.getModel();
-//        TableRowSorter<DefaultTableModel> srt = new TableRowSorter<>(tb);
-//        jTable1.setRowSorter(srt);
-//        srt.setRowFilter(RowFilter.regexFilter(Cari.getText()));
+        DefaultTableModel tb = (DefaultTableModel) jTable1.getModel();
+        TableRowSorter<DefaultTableModel> srt = new TableRowSorter<>(tb);
+        jTable1.setRowSorter(srt);
+        srt.setRowFilter(RowFilter.regexFilter(Cari.getText()));
     }//GEN-LAST:event_CariKeyReleased
 
     private void HargaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HargaActionPerformed
@@ -323,22 +328,60 @@ public class Data_Barang extends javax.swing.JPanel {
         int col = tb.findColumn("Nama Barang");
         int totalRow = tb.getRowCount();
         for (int i = 0; i < totalRow; i++) {
-            JOptionPane.showMessageDialog(null, tb.getValueAt(i, col).toString().toLowerCase());
+//            JOptionPane.showMessageDialog(null, tb.getValueAt(i, col).toString().toLowerCase());
             if (tb.getValueAt(i, col).toString().toLowerCase().equals(NamaBarang.getText().toLowerCase())) {
-                JOptionPane.showMessageDialog(null, "Ketemu");
+//                JOptionPane.showMessageDialog(null, tb.getValueAt(i, tb.findColumn("Id")).toString().toLowerCase());
+                Harga.setText(tb.getValueAt(i, tb.findColumn("Harga")).toString().toLowerCase());
+                Harga.setEditable(false);
+                jLabel4.setText("Stok Masuk");
+                break;
+            } else {
+                jLabel4.setText("Stok");
+                Harga.setEditable(true);
+                Harga.setText("");
             }
         }
     }//GEN-LAST:event_NamaBarangKeyReleased
 
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // TODO add your handling code here:
+        DefaultTableModel tb = (DefaultTableModel) jTable1.getModel();
+        int row = jTable1.getSelectedRow();
+        NamaBarang.setText(tb.getValueAt(row, tb.findColumn("Nama Barang")).toString().toLowerCase());
+        Harga.setText(tb.getValueAt(row, tb.findColumn("Harga")).toString().toLowerCase());
+        Harga.setEditable(false);
+        jLabel4.setText("Stok Masuk");
+    }//GEN-LAST:event_jTable1MouseClicked
+
     private ResultSet DataBarang(String query) {
         db.Query(query);
-//        try {
-//            JOptionPane.showMessageDialog(null, query);
-//            JOptionPane.showMessageDialog(null, db.resultSet().next());
-//        } catch (SQLException ex) {
-//            Logger.getLogger(Data_Barang.class.getName()).log(Level.SEVERE, null, ex);
-//        }
         return db.resultSet();
+    }
+
+    private void SetDataBarang() {
+        String query = "SELECT * FROM barang";
+        db.Query(query);
+        ResultSet rs = db.resultSet();
+        try {
+            int no = 0;
+
+            while (rs.next()) {
+                no++;
+                String id = Integer.toString(rs.getInt("id"));
+                String nama = rs.getString("nama_barang");
+                String stok = rs.getString("stok");
+                String harga = rs.getString("harga");
+
+                String tbData[] = {Integer.toString(no), id, nama, harga, stok};
+                DefaultTableModel tbModel = (DefaultTableModel) jTable1.getModel();
+
+                tbModel.addRow(tbData);
+            }
+
+        } catch (SQLException ex) {
+
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
