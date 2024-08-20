@@ -4,17 +4,27 @@
  */
 package Component;
 
+import Service.Database;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
+
 /**
  *
  * @author smart user
  */
 public class Data_Petugas extends javax.swing.JPanel {
 
+    private Database db = new Database();
     /**
      * Creates new form Data_Barang
      */
     public Data_Petugas() {
         initComponents();
+        SetDataPetugas();
     }
 
     /**
@@ -176,6 +186,11 @@ public class Data_Petugas extends javax.swing.JPanel {
         Cari.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         Cari.setForeground(new java.awt.Color(204, 204, 204));
         Cari.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        Cari.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CariActionPerformed(evt);
+            }
+        });
         Cari.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 CariKeyReleased(evt);
@@ -231,21 +246,21 @@ public class Data_Petugas extends javax.swing.JPanel {
 
         jPanel6.add(jPanel3);
 
-        jTable1.setBackground(new java.awt.Color(30, 30, 30));
-        jTable1.setForeground(new java.awt.Color(225, 225, 225));
+        jTable1.setBackground(new java.awt.Color(51, 51, 51));
+        jTable1.setForeground(new java.awt.Color(204, 204, 204));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Id", "Nama", "Email", "Username"
+                "No", "Id", "Nama", "Email", "Alamat", "No. HP"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -256,9 +271,9 @@ public class Data_Petugas extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        jTable1.setGridColor(new java.awt.Color(120, 120, 120));
-        jTable1.setSelectionBackground(new java.awt.Color(255, 255, 255));
-        jTable1.setSelectionForeground(new java.awt.Color(0, 0, 0));
+        jTable1.setGridColor(new java.awt.Color(102, 102, 102));
+        jTable1.setSelectionBackground(new java.awt.Color(51, 51, 51));
+        jTable1.setSelectionForeground(new java.awt.Color(204, 204, 204));
         jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -269,7 +284,7 @@ public class Data_Petugas extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1247, Short.MAX_VALUE)
+                    .addComponent(jPanel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -279,8 +294,8 @@ public class Data_Petugas extends javax.swing.JPanel {
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -315,10 +330,10 @@ public class Data_Petugas extends javax.swing.JPanel {
 
     private void CariKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_CariKeyReleased
         // TODO add your handling code here:
-//        DefaultTableModel tb = (DefaultTableModel) jTable1.getModel();
-//        TableRowSorter<DefaultTableModel> srt = new TableRowSorter<>(tb);
-//        jTable1.setRowSorter(srt);
-//        srt.setRowFilter(RowFilter.regexFilter(Cari.getText()));
+        DefaultTableModel tb = (DefaultTableModel) jTable1.getModel();
+        TableRowSorter<DefaultTableModel> srt = new TableRowSorter<>(tb);
+        jTable1.setRowSorter(srt);
+        srt.setRowFilter(RowFilter.regexFilter(Cari.getText()));
     }//GEN-LAST:event_CariKeyReleased
 
     private void EmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EmailActionPerformed
@@ -333,6 +348,35 @@ public class Data_Petugas extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void CariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CariActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CariActionPerformed
+
+    private void SetDataPetugas() {
+        String query = "SELECT * FROM profile";
+        db.Query(query);
+        ResultSet rs = db.resultSet();
+        try {
+            int no = 0;
+
+            while (rs.next()) {
+                no++;
+                String id = Integer.toString(rs.getInt("id"));
+                String nama = rs.getString("nama");
+                String email = rs.getString("email");
+                String alamat = rs.getString("alamat");
+                String noHP = rs.getString("no_hp");
+
+                String tbData[] = {Integer.toString(no), id, nama, email, alamat, noHP};
+                DefaultTableModel tbModel = (DefaultTableModel) jTable1.getModel();
+
+                tbModel.addRow(tbData);
+            }
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField Alamat;
