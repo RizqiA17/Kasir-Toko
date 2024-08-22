@@ -161,6 +161,7 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="HargaActionPerformed"/>
+                <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="HargaKeyPressed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="StokInput">
@@ -180,6 +181,9 @@
                   </Border>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="StokInputKeyPressed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

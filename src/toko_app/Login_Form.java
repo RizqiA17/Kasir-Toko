@@ -84,7 +84,9 @@ public class Login_Form extends javax.swing.JFrame {
         jLabel3.setText(":");
 
         EmailInput.setBackground(new java.awt.Color(51, 51, 51));
+        EmailInput.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         EmailInput.setForeground(new java.awt.Color(204, 204, 204));
+        EmailInput.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         EmailInput.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 EmailInputActionPerformed(evt);
@@ -134,7 +136,9 @@ public class Login_Form extends javax.swing.JFrame {
         jLabel7.setPreferredSize(new java.awt.Dimension(80, 16));
 
         PassInput.setBackground(new java.awt.Color(51, 51, 51));
+        PassInput.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         PassInput.setForeground(new java.awt.Color(204, 204, 204));
+        PassInput.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         PassInput.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 PassInputActionPerformed(evt);

@@ -7,6 +7,7 @@ package Main_App;
 import Component.Data_Barang;
 import Component.Data_Petugas;
 import Component.Riwayat_Transaksi;
+import Component.Supplier;
 import java.awt.Point;
 import java.awt.Toolkit;
 import javax.swing.SwingUtilities;
@@ -21,6 +22,7 @@ public class Home_Admin extends javax.swing.JFrame {
     private Data_Barang panelDataBarang = new Data_Barang();
     private Riwayat_Transaksi panelTransaksi = new Riwayat_Transaksi();
     private Data_Petugas panelPetugas = new Data_Petugas();
+    private Supplier panelSupplier = new Supplier();
     /**
      * Creates new form Home_Admin
      */
@@ -30,9 +32,11 @@ public class Home_Admin extends javax.swing.JFrame {
         jLayeredPane1.add(panelDataBarang);
         jLayeredPane1.add(panelTransaksi);
         jLayeredPane1.add(panelPetugas);
+        jLayeredPane1.add(panelSupplier);
         panelDataBarang.setVisible(false);
         panelPetugas.setVisible(false);
         panelTransaksi.setVisible(false);
+        panelSupplier.setVisible(false);
     }
 
     /**
@@ -107,10 +111,14 @@ public class Home_Admin extends javax.swing.JFrame {
         });
         jPanel4.add(jButton3);
 
-        jButton5.setBackground(new java.awt.Color(0, 0, 0));
-        jButton5.setForeground(new java.awt.Color(0, 0, 0));
-        jButton5.setText("Coming Soon");
-        jButton5.setEnabled(false);
+        jButton5.setBackground(new java.awt.Color(51, 51, 51));
+        jButton5.setForeground(new java.awt.Color(204, 204, 204));
+        jButton5.setText("Supplier");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
         jPanel4.add(jButton5);
 
         jButton4.setBackground(new java.awt.Color(51, 51, 51));
@@ -179,6 +187,7 @@ public class Home_Admin extends javax.swing.JFrame {
         panelDataBarang.setVisible(true);
         panelPetugas.setVisible(false);
         panelTransaksi.setVisible(false);
+        panelSupplier.setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -186,6 +195,7 @@ public class Home_Admin extends javax.swing.JFrame {
         panelDataBarang.setVisible(false);
         panelPetugas.setVisible(true);
         panelTransaksi.setVisible(false);
+        panelSupplier.setVisible(false);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -193,7 +203,16 @@ public class Home_Admin extends javax.swing.JFrame {
         panelDataBarang.setVisible(false);
         panelPetugas.setVisible(false);
         panelTransaksi.setVisible(true);
+        panelSupplier.setVisible(false);
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        panelDataBarang.setVisible(false);
+        panelPetugas.setVisible(false);
+        panelTransaksi.setVisible(false);
+        panelSupplier.setVisible(true);
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     /**
      * @param args the command line arguments

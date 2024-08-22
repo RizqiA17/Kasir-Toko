@@ -4,6 +4,7 @@
  */
 package Component;
 
+import Main_App.Pendaftar;
 import Service.Database;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -19,6 +20,7 @@ import javax.swing.table.TableRowSorter;
 public class Data_Petugas extends javax.swing.JPanel {
 
     private Database db = new Database();
+
     /**
      * Creates new form Data_Barang
      */
@@ -157,6 +159,11 @@ public class Data_Petugas extends javax.swing.JPanel {
         NoHP.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         NoHP.setForeground(new java.awt.Color(204, 204, 204));
         NoHP.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        NoHP.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                NoHPKeyPressed(evt);
+            }
+        });
         jPanel5.add(NoHP);
 
         jButton2.setBackground(new java.awt.Color(51, 51, 51));
@@ -271,6 +278,7 @@ public class Data_Petugas extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
+        jTable1.setFocusable(false);
         jTable1.setGridColor(new java.awt.Color(102, 102, 102));
         jTable1.setSelectionBackground(new java.awt.Color(51, 51, 51));
         jTable1.setSelectionForeground(new java.awt.Color(204, 204, 204));
@@ -302,6 +310,7 @@ public class Data_Petugas extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        Pendaftar.main(null);
 //        DefaultTableModel tbModel = (DefaultTableModel) jTable1.getModel();
 //        //        tbModel.removeRow(tbModel.getRowCount() - 1);
 //        int lenght = tbModel.getRowCount();
@@ -346,11 +355,46 @@ public class Data_Petugas extends javax.swing.JPanel {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        String nama = Nama.getText();
+        String email = Email.getText();
+        String password = Password.getText();
+        String alamat = Alamat.getText();
+        String noHP = NoHP.getText();
+
+        String query = "INSERT INTO profile (id, nama, email, password, alamat, no_hp, posisi) VALUES(null, '" + nama + "', '" + email + "', '" + password + "', '" + alamat + "', '" + noHP + "', 'Kasir')";
+        db.Query(query);
+        if (db.AddData() > 0) {
+            ClearTable();
+            SetDataPetugas();
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void CariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CariActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_CariActionPerformed
+
+    private void NoHPKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_NoHPKeyPressed
+        // TODO add your handling code here:
+
+        char c = evt.getKeyChar();
+        if (Character.isLetter(c)) {
+            NoHP.setEditable(false);
+        } else {
+            NoHP.setEditable(true);
+        }
+    }//GEN-LAST:event_NoHPKeyPressed
+
+    private void ClearTable() {
+        DefaultTableModel tbModel = (DefaultTableModel) jTable1.getModel();
+        int lenght = tbModel.getRowCount();
+        for (int i = 0; i < lenght; i++) {
+            try {
+                tbModel.removeRow(0);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
+        }
+    }
 
     private void SetDataPetugas() {
         String query = "SELECT * FROM profile";

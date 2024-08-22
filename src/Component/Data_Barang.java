@@ -111,12 +111,22 @@ public class Data_Barang extends javax.swing.JPanel {
                 HargaActionPerformed(evt);
             }
         });
+        Harga.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                HargaKeyPressed(evt);
+            }
+        });
         jPanel1.add(Harga);
 
         StokInput.setBackground(new java.awt.Color(51, 51, 51));
         StokInput.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         StokInput.setForeground(new java.awt.Color(204, 204, 204));
         StokInput.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        StokInput.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                StokInputKeyPressed(evt);
+            }
+        });
         jPanel1.add(StokInput);
 
         jPanel6.add(jPanel1);
@@ -352,6 +362,28 @@ public class Data_Barang extends javax.swing.JPanel {
         Harga.setEditable(false);
         jLabel4.setText("Stok Masuk");
     }//GEN-LAST:event_jTable1MouseClicked
+
+    private void HargaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_HargaKeyPressed
+        // TODO add your handling code here:
+        
+        char c = evt.getKeyChar();
+        if (Character.isLetter(c)) {
+            Harga.setEditable(false);
+        } else {
+            Harga.setEditable(true);
+        }
+    }//GEN-LAST:event_HargaKeyPressed
+
+    private void StokInputKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_StokInputKeyPressed
+        // TODO add your handling code here:
+        
+        char c = evt.getKeyChar();
+        if (Character.isLetter(c)) {
+            StokInput.setEditable(false);
+        } else {
+            StokInput.setEditable(true);
+        }
+    }//GEN-LAST:event_StokInputKeyPressed
 
     private ResultSet DataBarang(String query) {
         db.Query(query);
