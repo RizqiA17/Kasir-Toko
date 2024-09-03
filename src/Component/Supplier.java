@@ -4,17 +4,29 @@
  */
 package Component;
 
+import Service.Database;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
+
 /**
  *
  * @author smart user
  */
 public class Supplier extends javax.swing.JPanel {
 
+    private Database db = new Database();
+    private ResultSet rs;
+
     /**
      * Creates new form Supplier
      */
     public Supplier() {
         initComponents();
+        SetDataTable();
     }
 
     /**
@@ -52,10 +64,12 @@ public class Supplier extends javax.swing.JPanel {
         Fax = new javax.swing.JTextField();
         jPanel9 = new javax.swing.JPanel();
         jPanel12 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jPanel11 = new javax.swing.JPanel();
         jPanel13 = new javax.swing.JPanel();
-        jButton4 = new javax.swing.JButton();
+        Tambah = new javax.swing.JButton();
+        Edit = new javax.swing.JButton();
+        jPanel11 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        Cari = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -90,6 +104,11 @@ public class Supplier extends javax.swing.JPanel {
         KodeSupplier.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         KodeSupplier.setForeground(new java.awt.Color(204, 204, 204));
         KodeSupplier.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        KodeSupplier.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                KodeSupplierKeyReleased(evt);
+            }
+        });
         jPanel14.add(KodeSupplier);
 
         Nama.setBackground(new java.awt.Color(51, 51, 51));
@@ -194,6 +213,11 @@ public class Supplier extends javax.swing.JPanel {
         Fax.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         Fax.setForeground(new java.awt.Color(204, 204, 204));
         Fax.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        Fax.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                FaxKeyReleased(evt);
+            }
+        });
         jPanel7.add(Fax);
 
         jPanel10.add(jPanel7);
@@ -207,46 +231,58 @@ public class Supplier extends javax.swing.JPanel {
         jPanel12.setLayout(jPanel12Layout);
         jPanel12Layout.setHorizontalGroup(
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 455, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         jPanel12Layout.setVerticalGroup(
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 31, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
         jPanel9.add(jPanel12);
 
-        jButton1.setBackground(new java.awt.Color(51, 51, 51));
-        jButton1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(204, 204, 204));
-        jButton1.setText("Tambah");
-        jPanel9.add(jButton1);
+        jPanel13.setBackground(new java.awt.Color(38, 38, 38));
+        jPanel13.setLayout(new java.awt.GridLayout(1, 2, 5, 5));
+
+        Tambah.setBackground(new java.awt.Color(51, 51, 51));
+        Tambah.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        Tambah.setForeground(new java.awt.Color(204, 204, 204));
+        Tambah.setText("Tambah");
+        Tambah.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TambahActionPerformed(evt);
+            }
+        });
+        jPanel13.add(Tambah);
+
+        Edit.setBackground(new java.awt.Color(51, 51, 51));
+        Edit.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        Edit.setForeground(new java.awt.Color(204, 204, 204));
+        Edit.setText("Edit");
+        Edit.setEnabled(false);
+        jPanel13.add(Edit);
+
+        jPanel9.add(jPanel13);
 
         jPanel10.add(jPanel9);
 
         jPanel11.setBackground(new java.awt.Color(38, 38, 38));
         jPanel11.setLayout(new java.awt.GridLayout(2, 1, 5, 5));
 
-        jPanel13.setBackground(new java.awt.Color(38, 38, 38));
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel1.setText("Cari");
+        jPanel11.add(jLabel1);
 
-        javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
-        jPanel13.setLayout(jPanel13Layout);
-        jPanel13Layout.setHorizontalGroup(
-            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 455, Short.MAX_VALUE)
-        );
-        jPanel13Layout.setVerticalGroup(
-            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 31, Short.MAX_VALUE)
-        );
-
-        jPanel11.add(jPanel13);
-
-        jButton4.setBackground(new java.awt.Color(51, 51, 51));
-        jButton4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jButton4.setForeground(new java.awt.Color(204, 204, 204));
-        jButton4.setText("Edit");
-        jPanel11.add(jButton4);
+        Cari.setBackground(new java.awt.Color(51, 51, 51));
+        Cari.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        Cari.setForeground(new java.awt.Color(204, 204, 204));
+        Cari.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        Cari.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                CariKeyReleased(evt);
+            }
+        });
+        jPanel11.add(Cari);
 
         jPanel10.add(jPanel11);
 
@@ -264,20 +300,17 @@ public class Supplier extends javax.swing.JPanel {
         jTable1.setForeground(new java.awt.Color(204, 204, 204));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null}
+
             },
             new String [] {
-                "Kode", "Nama", "Email", "Telepon", "No. Rekening", "Kode Pos", "Alamat", "Fax"
+                "No", "Kode", "Nama", "Email", "Telepon", "No. Rekening", "Kode Pos", "Alamat", "Fax"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -291,6 +324,11 @@ public class Supplier extends javax.swing.JPanel {
         jTable1.setGridColor(new java.awt.Color(102, 102, 102));
         jTable1.setSelectionBackground(new java.awt.Color(51, 51, 51));
         jTable1.setSelectionForeground(new java.awt.Color(204, 204, 204));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -318,18 +356,144 @@ public class Supplier extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void TambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TambahActionPerformed
+        // TODO add your handling code here:
+        String kode = KodeSupplier.getText();
+        String nama = Nama.getText();
+        String email = Email.getText();
+        String telepon = Telepon.getText();
+        String rekening = Rekening.getText();
+        String pos = KodePos.getText();
+        String alamat = Alamat.getText();
+        String fax = Fax.getText();
+        String query = "INSERT INTO supplier (id, kode, nama, email, telepon, rekening, kode_pos, alamat, fax) VALUES(null, '" + kode + "', '" + nama + "', '" + email + "', '" + telepon + "', '" + rekening + "', '" + pos + "', '" + alamat + "', '" + fax + "')";
+        db.Query(query);
+        if (db.AddData() > 0) {
+            ClearTable();
+            SetDataTable();
+        }
+    }//GEN-LAST:event_TambahActionPerformed
+
+    private void FaxKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_FaxKeyReleased
+        // TODO add your handling code here:
+        DefaultTableModel tb = (DefaultTableModel) jTable1.getModel();
+        TableRowSorter<DefaultTableModel> srt = new TableRowSorter<>(tb);
+        jTable1.setRowSorter(srt);
+        srt.setRowFilter(RowFilter.regexFilter(Cari.getText()));
+    }//GEN-LAST:event_FaxKeyReleased
+
+    private void KodeSupplierKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_KodeSupplierKeyReleased
+        // TODO add your handling code here:
+        DefaultTableModel tb = (DefaultTableModel) jTable1.getModel();
+        int col = tb.findColumn("Kode");
+        int totalRow = tb.getRowCount();
+        for (int i = 0; i < totalRow; i++) {
+            //            JOptionPane.showMessageDialog(null, tb.getValueAt(i, col).toString().toLowerCase());
+            if (tb.getValueAt(i, col).toString().toLowerCase().equals(KodeSupplier.getText().toLowerCase())) {
+                //                JOptionPane.showMessageDialog(null, tb.getValueAt(i, tb.findColumn("Id")).toString().toLowerCase());
+                Nama.setText(tb.getValueAt(i, tb.findColumn("Nama")).toString());
+                Email.setText(tb.getValueAt(i, tb.findColumn("Email")).toString());
+                Telepon.setText(tb.getValueAt(i, tb.findColumn("Telepon")).toString());
+                Rekening.setText(tb.getValueAt(i, tb.findColumn("No. Rekening")).toString());
+                KodePos.setText(tb.getValueAt(i, tb.findColumn("Kode Pos")).toString());
+                Alamat.setText(tb.getValueAt(i, tb.findColumn("Alamat")).toString());
+                Fax.setText(tb.getValueAt(i, tb.findColumn("Fax")).toString());
+                Tambah.setEnabled(false);
+                Edit.setEnabled(true);
+                break;
+            } else {
+                Nama.setText("");
+                Email.setText("");
+                Telepon.setText("");
+                Rekening.setText("");
+                KodePos.setText("");
+                Alamat.setText("");
+                Fax.setText("");
+                Tambah.setEnabled(true);
+                Edit.setEnabled(false);
+            }
+        }
+    }//GEN-LAST:event_KodeSupplierKeyReleased
+
+    private void CariKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_CariKeyReleased
+        // TODO add your handling code here:
+        DefaultTableModel tb = (DefaultTableModel) jTable1.getModel();
+        TableRowSorter<DefaultTableModel> srt = new TableRowSorter<>(tb);
+        jTable1.setRowSorter(srt);
+        srt.setRowFilter(RowFilter.regexFilter(Cari.getText()));
+    }//GEN-LAST:event_CariKeyReleased
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // TODO add your handling code here:
+        DefaultTableModel tb = (DefaultTableModel) jTable1.getModel();
+        int row = jTable1.getSelectedRow();
+        KodeSupplier.setText(tb.getValueAt(row, tb.findColumn("Kode")).toString());
+        Nama.setText(tb.getValueAt(row, tb.findColumn("Nama")).toString());
+        Email.setText(tb.getValueAt(row, tb.findColumn("Email")).toString());
+        Telepon.setText(tb.getValueAt(row, tb.findColumn("Telepon")).toString());
+        Rekening.setText(tb.getValueAt(row, tb.findColumn("No. Rekening")).toString());
+        KodePos.setText(tb.getValueAt(row, tb.findColumn("Kode Pos")).toString());
+        Alamat.setText(tb.getValueAt(row, tb.findColumn("Alamat")).toString());
+        Fax.setText(tb.getValueAt(row, tb.findColumn("Fax")).toString());
+        Tambah.setEnabled(false);
+        Edit.setEnabled(true);
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    private void SetDataTable() {
+        String query = "SELECT * FROM supplier";
+        db.Query(query);
+        ResultSet rs = db.resultSet();
+        try {
+            int no = 0;
+
+            while (rs.next()) {
+                no++;
+                String kode = rs.getString("kode");
+                String nama = rs.getString("nama");
+                String email = rs.getString("email");
+                String telepon = rs.getString("telepon");
+                String rekening = rs.getString("rekening");
+                String kode_pos = rs.getString("kode_pos");
+                String alamat = rs.getString("alamat");
+                String fax = rs.getString("fax");
+
+                String tbData[] = {Integer.toString(no), kode, nama, email, telepon, rekening, kode_pos, alamat, fax};
+                DefaultTableModel tbModel = (DefaultTableModel) jTable1.getModel();
+
+                tbModel.addRow(tbData);
+            }
+
+        } catch (SQLException ex) {
+
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+    }
+
+    private void ClearTable() {
+        DefaultTableModel tbModel = (DefaultTableModel) jTable1.getModel();
+        int lenght = tbModel.getRowCount();
+        for (int i = 0; i < lenght; i++) {
+            try {
+                tbModel.removeRow(0);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
+        }
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField Alamat;
+    private javax.swing.JTextField Cari;
+    private javax.swing.JButton Edit;
     private javax.swing.JTextField Email;
     private javax.swing.JTextField Fax;
     private javax.swing.JTextField KodePos;
     private javax.swing.JTextField KodeSupplier;
     private javax.swing.JTextField Nama;
     private javax.swing.JTextField Rekening;
+    private javax.swing.JButton Tambah;
     private javax.swing.JTextField Telepon;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -338,15 +502,8 @@ public class Supplier extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
@@ -357,21 +514,9 @@ public class Supplier extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel17;
     private javax.swing.JPanel jPanel18;
     private javax.swing.JPanel jPanel19;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
-    private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField8;
     // End of variables declaration//GEN-END:variables
 }

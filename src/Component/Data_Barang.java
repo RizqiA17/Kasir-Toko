@@ -9,6 +9,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
@@ -21,7 +24,7 @@ import javax.swing.table.TableRowSorter;
 public class Data_Barang extends javax.swing.JPanel {
 
     private Database db = new Database();
-    private ResultSet rsNull = null;
+    private ResultSet rs;
 
     /**
      * Creates new form Data_Barang
@@ -29,6 +32,7 @@ public class Data_Barang extends javax.swing.JPanel {
     public Data_Barang() {
         initComponents();
         SetDataBarang();
+        SetSupplierOption();
     }
 
     /**
@@ -50,14 +54,17 @@ public class Data_Barang extends javax.swing.JPanel {
         Harga = new javax.swing.JTextField();
         StokInput = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        jPanel7 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
-        Cari = new javax.swing.JTextField();
+        jComboBox1 = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
+        Cari = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
 
         setBackground(new java.awt.Color(38, 38, 38));
+        setForeground(new java.awt.Color(204, 204, 204));
 
         jLabel1.setBackground(new java.awt.Color(20, 20, 20));
         jLabel1.setFont(new java.awt.Font("Cascadia Code", 1, 36)); // NOI18N
@@ -74,15 +81,15 @@ public class Data_Barang extends javax.swing.JPanel {
         jPanel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jPanel1.setLayout(new java.awt.GridLayout(2, 3, 5, 5));
 
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setForeground(new java.awt.Color(204, 204, 204));
         jLabel2.setText("Nama Barang");
         jPanel1.add(jLabel2);
 
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setForeground(new java.awt.Color(204, 204, 204));
         jLabel3.setText("Harga");
         jPanel1.add(jLabel3);
 
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setForeground(new java.awt.Color(204, 204, 204));
         jLabel4.setText("Stok");
         jPanel1.add(jLabel4);
 
@@ -134,11 +141,54 @@ public class Data_Barang extends javax.swing.JPanel {
         jPanel3.setBackground(new java.awt.Color(38, 38, 38));
         jPanel3.setForeground(new java.awt.Color(204, 204, 204));
         jPanel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jPanel3.setLayout(new java.awt.GridLayout(2, 3, 5, 5));
 
-        jPanel2.setBackground(new java.awt.Color(38, 38, 38));
+        jLabel6.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel6.setText("Supplier");
+        jPanel3.add(jLabel6);
 
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel7.setBackground(new java.awt.Color(38, 38, 38));
+
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 308, Short.MAX_VALUE)
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 32, Short.MAX_VALUE)
+        );
+
+        jPanel3.add(jPanel7);
+
+        jLabel5.setForeground(new java.awt.Color(204, 204, 204));
         jLabel5.setText("Cari");
+        jPanel3.add(jLabel5);
+
+        jComboBox1.setBackground(new java.awt.Color(51, 51, 51));
+        jComboBox1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jComboBox1.setForeground(new java.awt.Color(204, 204, 204));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " " }));
+        jComboBox1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jComboBox1);
+
+        jButton1.setBackground(new java.awt.Color(51, 51, 51));
+        jButton1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(204, 204, 204));
+        jButton1.setText("Tambah");
+        jButton1.setPreferredSize(new java.awt.Dimension(64, 30));
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jButton1);
 
         Cari.setBackground(new java.awt.Color(51, 51, 51));
         Cari.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -149,52 +199,7 @@ public class Data_Barang extends javax.swing.JPanel {
                 CariKeyReleased(evt);
             }
         });
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Cari, javax.swing.GroupLayout.DEFAULT_SIZE, 461, Short.MAX_VALUE)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jLabel5)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Cari, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE))
-        );
-
-        jButton1.setBackground(new java.awt.Color(51, 51, 51));
-        jButton1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Tambah");
-        jButton1.setPreferredSize(new java.awt.Dimension(64, 30));
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 467, Short.MAX_VALUE))
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(7, 15, Short.MAX_VALUE))
-        );
+        jPanel3.add(Cari);
 
         jPanel6.add(jPanel3);
 
@@ -278,7 +283,7 @@ public class Data_Barang extends javax.swing.JPanel {
         String queryGetBarang = "SELECT * FROM `barang` WHERE nama_barang = '" + nama + "'";
         String query = queryGetBarang;
 
-        ResultSet rs = DataBarang(queryGetBarang);
+        rs = DataBarang(queryGetBarang);
         try {
             int idBarang = -1;
             if (rs.next()) {
@@ -365,7 +370,7 @@ public class Data_Barang extends javax.swing.JPanel {
 
     private void HargaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_HargaKeyPressed
         // TODO add your handling code here:
-        
+
         char c = evt.getKeyChar();
         if (Character.isLetter(c)) {
             Harga.setEditable(false);
@@ -376,7 +381,7 @@ public class Data_Barang extends javax.swing.JPanel {
 
     private void StokInputKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_StokInputKeyPressed
         // TODO add your handling code here:
-        
+
         char c = evt.getKeyChar();
         if (Character.isLetter(c)) {
             StokInput.setEditable(false);
@@ -384,6 +389,10 @@ public class Data_Barang extends javax.swing.JPanel {
             StokInput.setEditable(true);
         }
     }//GEN-LAST:event_StokInputKeyPressed
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private ResultSet DataBarang(String query) {
         db.Query(query);
@@ -393,7 +402,7 @@ public class Data_Barang extends javax.swing.JPanel {
     private void SetDataBarang() {
         String query = "SELECT * FROM barang";
         db.Query(query);
-        ResultSet rs = db.resultSet();
+        rs = db.resultSet();
         try {
             int no = 0;
 
@@ -416,21 +425,56 @@ public class Data_Barang extends javax.swing.JPanel {
         }
     }
 
+    private void SetSupplierOption() {
+        int row = 0;
+
+        try {
+            for (int i = 0; i < 2; i++) {
+                String query = "SELECT kode, nama FROM supplier";
+                db.Query(query);
+                rs = db.resultSet();
+
+                if (i < 1) {
+                    while (rs.next()) {
+                        row++;
+                    }
+                }
+            }
+            
+            String model[] = new String[row];
+            DefaultComboBoxModel<String> comboBoxModel = new DefaultComboBoxModel<>();
+
+            int i = 0;
+            while (rs.next()) {
+                model[i] = rs.getString("nama");
+                comboBoxModel.addElement(model[i]);
+                i++;
+            }
+            
+            jComboBox1.setModel(comboBoxModel);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField Cari;
     private javax.swing.JTextField Harga;
     private javax.swing.JTextField NamaBarang;
     private javax.swing.JTextField StokInput;
     private javax.swing.JButton jButton1;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables

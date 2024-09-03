@@ -4,12 +4,20 @@
  */
 package Component;
 
+import Service.Database;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author smart user
  */
 public class Stok_Barang extends javax.swing.JPanel {
 
+    private Database db = new Database();
+    private ResultSet rs;
     /**
      * Creates new form Data_Barang
      */
@@ -45,12 +53,12 @@ public class Stok_Barang extends javax.swing.JPanel {
         jLabel1.setFocusable(false);
 
         jPanel6.setBackground(new java.awt.Color(38, 38, 38));
-        jPanel6.setLayout(new java.awt.GridLayout());
+        jPanel6.setLayout(new java.awt.GridLayout(1, 0));
 
         jPanel3.setBackground(new java.awt.Color(38, 38, 38));
         jPanel3.setForeground(new java.awt.Color(204, 204, 204));
         jPanel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jPanel3.setLayout(new java.awt.GridLayout());
+        jPanel3.setLayout(new java.awt.GridLayout(1, 0));
 
         jPanel2.setBackground(new java.awt.Color(38, 38, 38));
 
@@ -138,7 +146,7 @@ public class Stok_Barang extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 338, Short.MAX_VALUE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -151,6 +159,31 @@ public class Stok_Barang extends javax.swing.JPanel {
 //        srt.setRowFilter(RowFilter.regexFilter(Cari.getText()));
     }//GEN-LAST:event_CariKeyReleased
 
+    private void SetDataBarang() {
+        String query = "SELECT * FROM barang";
+        db.Query(query);
+        ResultSet rs = db.resultSet();
+        try {
+            int no = 0;
+
+            while (rs.next()) {
+                no++;
+                String id = Integer.toString(rs.getInt("id"));
+                String nama = rs.getString("nama_barang");
+                String stok = rs.getString("stok");
+                String harga = rs.getString("harga");
+
+                String tbData[] = {Integer.toString(no), id, nama, harga, stok};
+                DefaultTableModel tbModel = (DefaultTableModel) jTable1.getModel();
+
+                tbModel.addRow(tbData);
+            }
+
+        } catch (SQLException ex) {
+
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField Cari;
