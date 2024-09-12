@@ -23,6 +23,7 @@ public class Stok_Barang extends javax.swing.JPanel {
      */
     public Stok_Barang() {
         initComponents();
+        SetDataBarang();
     }
 
     /**

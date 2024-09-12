@@ -211,14 +211,14 @@ public class Data_Barang extends javax.swing.JPanel {
 
             },
             new String [] {
-                "No", "Id", "Nama Barang", "Harga", "Stok"
+                "No", "Id", "Nama Barang", "Harga", "Stok", "Supplier"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -400,7 +400,7 @@ public class Data_Barang extends javax.swing.JPanel {
     }
 
     private void SetDataBarang() {
-        String query = "SELECT * FROM barang";
+        String query = "SELECT * FROM barang, supplier WHERE barang.id_supplier = supplier.id";
         db.Query(query);
         rs = db.resultSet();
         try {
@@ -412,8 +412,9 @@ public class Data_Barang extends javax.swing.JPanel {
                 String nama = rs.getString("nama_barang");
                 String stok = rs.getString("stok");
                 String harga = rs.getString("harga");
+                String supplier = rs.getString("supplier.nama");
 
-                String tbData[] = {Integer.toString(no), id, nama, harga, stok};
+                String tbData[] = {Integer.toString(no), id, nama, harga, stok, supplier};
                 DefaultTableModel tbModel = (DefaultTableModel) jTable1.getModel();
 
                 tbModel.addRow(tbData);

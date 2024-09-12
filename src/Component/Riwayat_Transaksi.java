@@ -4,17 +4,31 @@
  */
 package Component;
 
+import Main_App.Detail_Transaksi;
+import Service.Database;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
+
 /**
  *
  * @author smart user
  */
 public class Riwayat_Transaksi extends javax.swing.JPanel {
 
+    private Database db = new Database();
+    private ResultSet rs;
+    private Detail_Transaksi dt = new Detail_Transaksi();
+    
     /**
      * Creates new form Data_Barang
      */
     public Riwayat_Transaksi() {
         initComponents();
+        SetRiwayatTransaksi();
     }
 
     /**
@@ -114,14 +128,14 @@ public class Riwayat_Transaksi extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Id", "Total Transaksi", "Tanggal Transaksi"
+                "No", "Id", "Total Transaksi", "Tanggal Transaksi"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -168,17 +182,52 @@ public class Riwayat_Transaksi extends javax.swing.JPanel {
 
     private void CariKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_CariKeyReleased
         // TODO add your handling code here:
-//        DefaultTableModel tb = (DefaultTableModel) jTable1.getModel();
-//        TableRowSorter<DefaultTableModel> srt = new TableRowSorter<>(tb);
-//        jTable1.setRowSorter(srt);
-//        srt.setRowFilter(RowFilter.regexFilter(Cari.getText()));
+        DefaultTableModel tb = (DefaultTableModel) jTable1.getModel();
+        TableRowSorter<DefaultTableModel> srt = new TableRowSorter<>(tb);
+        jTable1.setRowSorter(srt);
+        srt.setRowFilter(RowFilter.regexFilter(Cari.getText()));
     }//GEN-LAST:event_CariKeyReleased
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         // TODO add your handling code here:
-
+        
+        DefaultTableModel tb = (DefaultTableModel) jTable1.getModel();
+        int row = jTable1.getSelectedRow();
+        
+        int id = Integer.valueOf(tb.getValueAt(row, 1).toString());
+//            JOptionPane.showMessageDialog(null, id);
+        
+//        dt.main(null);
+//        dt.id_transaksi = id;
+        dt.SetIdTransaksi(id);
+        dt.SetBarang();
+        dt.setVisible(true);
     }//GEN-LAST:event_jTable1MouseClicked
 
+    private void SetRiwayatTransaksi() {
+        String query = "SELECT * FROM transaksi";
+        db.Query(query);
+        rs = db.resultSet();
+        try {
+            int no = 0;
+
+            while (rs.next()) {
+                no++;
+                String id = Integer.toString(rs.getInt("id"));
+                String total = rs.getString("total_transaksi");
+                String tgl = rs.getString("tgl_transaksi");
+
+                String tbData[] = {Integer.toString(no), id, total, tgl};
+                DefaultTableModel tbModel = (DefaultTableModel) jTable1.getModel();
+
+                tbModel.addRow(tbData);
+            }
+
+        } catch (SQLException ex) {
+
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField Cari;

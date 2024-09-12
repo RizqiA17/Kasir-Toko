@@ -36,7 +36,7 @@ public class Transaksi extends javax.swing.JFrame {
     public Transaksi() {
         initComponents();
         FullScreen();
-//        SetDataBarang();
+        SetDataBarang();
 //        indexBarang = 0;
     }
 
@@ -113,14 +113,14 @@ public class Transaksi extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Id", "Nama Barang", "Harga", "Jumlah", "Total"
+                "Id", "Nama Barang", "Harga", "Jumlah", "Total", "Hapus"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -135,6 +135,11 @@ public class Transaksi extends javax.swing.JFrame {
         jTable1.setInheritsPopupMenu(true);
         jTable1.setSelectionBackground(new java.awt.Color(51, 51, 51));
         jTable1.setSelectionForeground(new java.awt.Color(204, 204, 204));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         jButton2.setBackground(new java.awt.Color(51, 51, 51));
@@ -505,6 +510,7 @@ public class Transaksi extends javax.swing.JFrame {
             jmlhBarang = JumlahBarang.getText();
         }
         DefaultTableModel tbModel = (DefaultTableModel) jTable1.getModel();
+
 //        int lenght = tbModel.getRowCount();
 //        int totalHarga = Integer.parseInt(TotalHargaBarang.getText());
 //        boolean addData = true;
@@ -532,7 +538,6 @@ public class Transaksi extends javax.swing.JFrame {
 //        }
 //        totalTransaksi += Integer.parseInt(TotalHargaBarang.getText());
 //        TotalTransaksi.setText(Integer.toString(totalTransaksi));
-
 //        for (int i = 0; i < lenght; i++) {
 //            try {
 //                int totalHarga = Integer.parseInt(TotalHargaBarang.getText());
@@ -547,8 +552,7 @@ public class Transaksi extends javax.swing.JFrame {
 //            } catch (Exception e) {
 //                JOptionPane.showMessageDialog(null, e);
 //            }
-
-        String[] tbData = {idBarang, NamaBarang.getText(), TotalHargaBarang.getText(), jmlhBarang, TotalHargaBarang.getText()};
+        String[] tbData = {idBarang, NamaBarang.getText(), TotalHargaBarang.getText(), jmlhBarang, TotalHargaBarang.getText(), "Hapus?"};
         tbModel.addRow(tbData);
         totalTransaksi += Integer.parseInt(TotalHargaBarang.getText());
         TotalTransaksi.setText(Integer.toString(totalTransaksi));//        }
@@ -583,14 +587,17 @@ public class Transaksi extends javax.swing.JFrame {
         // TODO add your handling code here:
         DefaultTableModel tbModel = (DefaultTableModel) jTable1.getModel();
         String idTransaksi = null;
+        String query = "";
         try {
-            String query = "INSERT INTO transaksi VALUES(null, " + totalTransaksi + ", CURRENT_TIMESTAMP())";
+            query = "INSERT INTO transaksi VALUES(null, " + totalTransaksi + ", CURRENT_TIMESTAMP())";
             db.Query(query);
             db.AddData();
             query = "SELECT * FROM `transaksi` ORDER BY `id` DESC LIMIT 1;";
             db.Query(query);
             rs = db.resultSet();
-            idTransaksi = rs.getString("id");
+            while (rs.next()) {
+                idTransaksi = rs.getString("id");
+            }
             //            JOptionPane.showMessageDialog(null, rs.getString("id"));
 
         } catch (SQLException ex) {
@@ -599,24 +606,22 @@ public class Transaksi extends javax.swing.JFrame {
         int lenght = tbModel.getRowCount();
         for (int i = 0; i < lenght; i++) {
             try {
-                String idBarang = (String) tbModel.getValueAt(0, 0);
-                String barang = (String) tbModel.getValueAt(0, 1);
-                String jmlh = (String) tbModel.getValueAt(0, 3);
-                String totalHarga = (String) tbModel.getValueAt(0, 4);
-
-                String query = "INSERT INTO data_transaksi VALUES(null, '" + idTransaksi + "', '" + idBarang + "', '" + barang + "', '" + jmlh + "', '" + totalHarga + "')";
+                String id = (String) tbModel.getValueAt(i, 0);
+                String jmlh = (String) tbModel.getValueAt(i, 3);
+                query = "INSERT INTO riwayat_barang VALUES(null, " + id + ", " + jmlh + ", 'Keluar', CURRENT_TIMESTAMP(), " + idTransaksi + ")";
                 db.Query(query);
                 db.AddData();
 
-                query = "SELECT stok FROM gudang Where id = " + idBarang;
+                query = "SELECT * FROM `barang` WHERE id = " + id;
                 db.Query(query);
                 rs = db.resultSet();
-
-                int sisaStok = Integer.parseInt(rs.getString("stok")) - Integer.parseInt(jmlh);
-                query = "UPDATE gudang SET stok = " + sisaStok + " WHERE id = " + idBarang;
-                db.Query(query);
-                db.AddData();
-
+                while (rs.next()) {
+                    idTransaksi = rs.getString("id");
+                    int sisaStok = rs.getInt("stok") - Integer.valueOf(jmlh);
+                    query = "UPDATE barang SET stok = " + sisaStok + " WHERE id = " + id;
+                    db.Query(query);
+                    db.AddData();
+                }
                 tbModel.removeRow(0);
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, e);
@@ -632,6 +637,13 @@ public class Transaksi extends javax.swing.JFrame {
             }
         }
         SetDataBarang();
+        
+        NamaBarang.setText("");
+        JumlahBarang.setText("");
+        TotalHargaBarang.setText("");
+        TotalTransaksi.setText("");
+        Pembayaran.setText("");
+        Kembalian.setText("");
     }//GEN-LAST:event_BayarActionPerformed
 
     private void PembayaranKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_PembayaranKeyReleased
@@ -667,22 +679,38 @@ public class Transaksi extends javax.swing.JFrame {
         row = jTable2.getSelectedRow();
         idBarang = jTable2.getModel().getValueAt(row, 0).toString();
 
-        String query = "SELECT * FROM gudang Where id = " + idBarang;
+        String query = "SELECT * FROM barang Where id = " + idBarang;
         db.Query(query);
         rs = db.resultSet();
         try {
             //            JOptionPane.showMessageDialog(null, tc);
-            NamaBarang.setText(rs.getString("nama_barang"));
-            harga = Integer.parseInt(rs.getString("harga"));
-            Harga.setText(Integer.toString(harga));
-            TotalHargaBarang.setText(Integer.toString(harga));
-            JumlahBarang.setText("");
-            stok = Integer.parseInt(rs.getString("stok"));
+            while (rs.next()) {
+                NamaBarang.setText(rs.getString("nama_barang"));
+                harga = Integer.parseInt(rs.getString("harga"));
+                Harga.setText(Integer.toString(harga));
+                TotalHargaBarang.setText(Integer.toString(harga));
+                JumlahBarang.setText("");
+                stok = Integer.parseInt(rs.getString("stok"));
+            }
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e);
         }
     }//GEN-LAST:event_jTable2MouseClicked
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // TODO add your handling code here:
+        DefaultTableModel tbModel = (DefaultTableModel) jTable1.getModel();
+
+        row = jTable1.getSelectedRow();
+        int column = jTable1.getSelectedColumn();
+        if (column == 5) {
+
+            totalTransaksi -= Integer.parseInt((String) tbModel.getValueAt(row, 4));
+            TotalTransaksi.setText(Integer.toString(totalTransaksi));
+            tbModel.removeRow(row);
+        }
+    }//GEN-LAST:event_jTable1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -739,7 +767,7 @@ public class Transaksi extends javax.swing.JFrame {
 
     private void SetDataBarang() {
         Database db = new Database();
-        String query = "SELECT * FROM gudang";
+        String query = "SELECT * FROM barang";
         db.Query(query);
         rs = db.resultSet();
         try {

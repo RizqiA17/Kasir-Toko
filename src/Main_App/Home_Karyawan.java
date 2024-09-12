@@ -107,7 +107,11 @@ public class Home_Karyawan extends javax.swing.JFrame {
         jButton5.setBackground(new java.awt.Color(0, 0, 0));
         jButton5.setForeground(new java.awt.Color(0, 0, 0));
         jButton5.setText("Coming Soon");
-        jButton5.setEnabled(false);
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
         jPanel4.add(jButton5);
 
         jButton4.setBackground(new java.awt.Color(51, 51, 51));
@@ -188,6 +192,11 @@ public class Home_Karyawan extends javax.swing.JFrame {
         panelDataBarang.setVisible(false);
         panelTransaksi.setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        Detail_Transaksi dt = new Detail_Transaksi();
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     /**
      * @param args the command line arguments

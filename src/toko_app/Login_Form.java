@@ -30,7 +30,8 @@ public class Login_Form extends javax.swing.JFrame {
     public Login_Form() {
         initComponents();
         FullScreen();
-        Home_Admin.main(null);
+//        Home_Admin.main(null);
+        Home_Karyawan.main(null);
     }
 
     /**
