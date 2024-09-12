@@ -26,7 +26,7 @@ public class Detail_Transaksi extends javax.swing.JFrame {
     public Detail_Transaksi() {
         initComponents();
 //        SetBarang();
-        JOptionPane.showMessageDialog(null, (int) (id_transaksi));
+//        JOptionPane.showMessageDialog(null, (int) (id_transaksi));
     }
 
     /**

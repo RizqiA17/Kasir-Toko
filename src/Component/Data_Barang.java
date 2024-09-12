@@ -44,24 +44,29 @@ public class Data_Barang extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel7 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
+        jLabel8 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        Kode = new javax.swing.JTextField();
         NamaBarang = new javax.swing.JTextField();
         Harga = new javax.swing.JTextField();
-        StokInput = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
+        StokInput = new javax.swing.JTextField();
         jComboBox1 = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
-        Cari = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jLabel5 = new javax.swing.JLabel();
+        Cari = new javax.swing.JTextField();
+
+        jLabel7.setText("jLabel7");
 
         setBackground(new java.awt.Color(38, 38, 38));
         setForeground(new java.awt.Color(204, 204, 204));
@@ -81,6 +86,10 @@ public class Data_Barang extends javax.swing.JPanel {
         jPanel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jPanel1.setLayout(new java.awt.GridLayout(2, 3, 5, 5));
 
+        jLabel8.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel8.setText("Kode");
+        jPanel1.add(jLabel8);
+
         jLabel2.setForeground(new java.awt.Color(204, 204, 204));
         jLabel2.setText("Nama Barang");
         jPanel1.add(jLabel2);
@@ -89,9 +98,20 @@ public class Data_Barang extends javax.swing.JPanel {
         jLabel3.setText("Harga");
         jPanel1.add(jLabel3);
 
-        jLabel4.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel4.setText("Stok");
-        jPanel1.add(jLabel4);
+        Kode.setBackground(new java.awt.Color(51, 51, 51));
+        Kode.setForeground(new java.awt.Color(204, 204, 204));
+        Kode.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        Kode.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                KodeActionPerformed(evt);
+            }
+        });
+        Kode.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                KodeKeyReleased(evt);
+            }
+        });
+        jPanel1.add(Kode);
 
         NamaBarang.setBackground(new java.awt.Color(51, 51, 51));
         NamaBarang.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -125,23 +145,16 @@ public class Data_Barang extends javax.swing.JPanel {
         });
         jPanel1.add(Harga);
 
-        StokInput.setBackground(new java.awt.Color(51, 51, 51));
-        StokInput.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        StokInput.setForeground(new java.awt.Color(204, 204, 204));
-        StokInput.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        StokInput.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                StokInputKeyPressed(evt);
-            }
-        });
-        jPanel1.add(StokInput);
-
         jPanel6.add(jPanel1);
 
         jPanel3.setBackground(new java.awt.Color(38, 38, 38));
         jPanel3.setForeground(new java.awt.Color(204, 204, 204));
         jPanel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jPanel3.setLayout(new java.awt.GridLayout(2, 3, 5, 5));
+
+        jLabel4.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel4.setText("Stok");
+        jPanel3.add(jLabel4);
 
         jLabel6.setForeground(new java.awt.Color(204, 204, 204));
         jLabel6.setText("Supplier");
@@ -162,9 +175,16 @@ public class Data_Barang extends javax.swing.JPanel {
 
         jPanel3.add(jPanel7);
 
-        jLabel5.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel5.setText("Cari");
-        jPanel3.add(jLabel5);
+        StokInput.setBackground(new java.awt.Color(51, 51, 51));
+        StokInput.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        StokInput.setForeground(new java.awt.Color(204, 204, 204));
+        StokInput.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        StokInput.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                StokInputKeyPressed(evt);
+            }
+        });
+        jPanel3.add(StokInput);
 
         jComboBox1.setBackground(new java.awt.Color(51, 51, 51));
         jComboBox1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -190,17 +210,6 @@ public class Data_Barang extends javax.swing.JPanel {
         });
         jPanel3.add(jButton1);
 
-        Cari.setBackground(new java.awt.Color(51, 51, 51));
-        Cari.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        Cari.setForeground(new java.awt.Color(204, 204, 204));
-        Cari.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        Cari.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                CariKeyReleased(evt);
-            }
-        });
-        jPanel3.add(Cari);
-
         jPanel6.add(jPanel3);
 
         jTable1.setBackground(new java.awt.Color(51, 51, 51));
@@ -211,7 +220,7 @@ public class Data_Barang extends javax.swing.JPanel {
 
             },
             new String [] {
-                "No", "Id", "Nama Barang", "Harga", "Stok", "Supplier"
+                "No", "Kode", "Nama Barang", "Harga", "Stok", "Supplier"
             }
         ) {
             Class[] types = new Class [] {
@@ -239,6 +248,19 @@ public class Data_Barang extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(jTable1);
 
+        jLabel5.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel5.setText("Cari");
+
+        Cari.setBackground(new java.awt.Color(51, 51, 51));
+        Cari.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        Cari.setForeground(new java.awt.Color(204, 204, 204));
+        Cari.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        Cari.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                CariKeyReleased(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -248,7 +270,11 @@ public class Data_Barang extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1)
                     .addComponent(jPanel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(Cari)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -258,7 +284,11 @@ public class Data_Barang extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 259, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Cari, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 309, Short.MAX_VALUE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -278,24 +308,38 @@ public class Data_Barang extends javax.swing.JPanel {
         }
 
         String nama = NamaBarang.getText().toLowerCase();
+        String kodeBarang = (Kode.getText());
         int stok = Integer.valueOf(StokInput.getText());
         int harga = Integer.valueOf(Harga.getText());
         String queryGetBarang = "SELECT * FROM `barang` WHERE nama_barang = '" + nama + "'";
         String query = queryGetBarang;
+        String supplier = (String) jComboBox1.getSelectedItem();
+        String idSupplier = "";
+        query = "SELECT * FROM `supplier` WHERE nama = '" + supplier + "'";
+        db.Query(query);
+        rs = db.resultSet();
+        try {
+            while (rs.next()) {
+                idSupplier = rs.getString("id");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Data_Barang.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
+//        JOptionPane.showMessageDialog(null, idSupplier);
         rs = DataBarang(queryGetBarang);
         try {
             int idBarang = -1;
             if (rs.next()) {
                 idBarang = rs.getInt("id");
                 int totalStok = stok + rs.getInt("stok");
-                query = "UPDATE `barang` SET stok = '" + totalStok + "' WHERE id = '" + idBarang + "'";
+                query = "UPDATE `barang` SET nama = '" + totalStok + "' WHERE id = '" + idBarang + "'";
                 db.Query(query);
                 if (db.AddData() > 0) {
 //            SetDataBarang();
                 }
             } else if (!rs.next()) {
-                query = "INSERT INTO `barang` (`id`, `nama_barang`, `harga`, `stok`) VALUES(NULL, '" + nama + "', '" + harga + "', '" + stok + "')";
+                query = "INSERT INTO `barang` (`id`, `nama_barang`, `harga`, `stok`, `id_supplier`) VALUES(" + kodeBarang + ", '" + nama + "', '" + harga + "', '" + stok + "', '" + idSupplier + "')";
                 db.Query(query);
                 if (db.AddData() > 0) {
                     rs = DataBarang(queryGetBarang);
@@ -304,7 +348,7 @@ public class Data_Barang extends javax.swing.JPanel {
                     }
                 }
             }
-            query = "INSERT INTO `riwayat_barang` (`id`, `id_barang`, `jumlah_barang`) VALUES (null, '" + idBarang + "', '" + stok + "')";
+            query = "INSERT INTO `riwayat_barang` (`id`, `id_barang`, `jumlah_barang`) VALUES (null, '" + kodeBarang + "', '" + stok + "')";
 //            JOptionPane.showMessageDialog(null, query);
             db.Query(query);
             if (db.AddData() > 0) {
@@ -362,6 +406,7 @@ public class Data_Barang extends javax.swing.JPanel {
         // TODO add your handling code here:
         DefaultTableModel tb = (DefaultTableModel) jTable1.getModel();
         int row = jTable1.getSelectedRow();
+        Kode.setText(tb.getValueAt(row, tb.findColumn("Kode")).toString());
         NamaBarang.setText(tb.getValueAt(row, tb.findColumn("Nama Barang")).toString().toLowerCase());
         Harga.setText(tb.getValueAt(row, tb.findColumn("Harga")).toString().toLowerCase());
         Harga.setEditable(false);
@@ -394,6 +439,21 @@ public class Data_Barang extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
+    private void KodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_KodeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_KodeActionPerformed
+
+    private void KodeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_KodeKeyReleased
+        // TODO add your handling code here:
+
+        char c = evt.getKeyChar();
+        if (Character.isLetter(c)) {
+            StokInput.setEditable(false);
+        } else {
+            StokInput.setEditable(true);
+        }
+    }//GEN-LAST:event_KodeKeyReleased
+
     private ResultSet DataBarang(String query) {
         db.Query(query);
         return db.resultSet();
@@ -408,7 +468,7 @@ public class Data_Barang extends javax.swing.JPanel {
 
             while (rs.next()) {
                 no++;
-                String id = Integer.toString(rs.getInt("id"));
+                String id = Long.toString(rs.getLong("id"));
                 String nama = rs.getString("nama_barang");
                 String stok = rs.getString("stok");
                 String harga = rs.getString("harga");
@@ -441,7 +501,7 @@ public class Data_Barang extends javax.swing.JPanel {
                     }
                 }
             }
-            
+
             String model[] = new String[row];
             DefaultComboBoxModel<String> comboBoxModel = new DefaultComboBoxModel<>();
 
@@ -451,7 +511,7 @@ public class Data_Barang extends javax.swing.JPanel {
                 comboBoxModel.addElement(model[i]);
                 i++;
             }
-            
+
             jComboBox1.setModel(comboBoxModel);
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
@@ -462,6 +522,7 @@ public class Data_Barang extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField Cari;
     private javax.swing.JTextField Harga;
+    private javax.swing.JTextField Kode;
     private javax.swing.JTextField NamaBarang;
     private javax.swing.JTextField StokInput;
     private javax.swing.JButton jButton1;
@@ -472,6 +533,8 @@ public class Data_Barang extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel6;

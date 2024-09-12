@@ -55,17 +55,20 @@ public class Transaksi extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
+        jLabel12 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
+        Kode = new javax.swing.JTextField();
         NamaBarang = new javax.swing.JTextField();
-        Harga = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
+        Harga = new javax.swing.JTextField();
         JumlahBarang = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
         TotalHargaBarang = new javax.swing.JTextField();
+        jButton2 = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jTextField5 = new javax.swing.JTextField();
         TotalTransaksi = new javax.swing.JTextField();
@@ -142,17 +145,6 @@ public class Transaksi extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jTable1);
 
-        jButton2.setBackground(new java.awt.Color(51, 51, 51));
-        jButton2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(204, 204, 204));
-        jButton2.setText("Tambah");
-        jButton2.setMinimumSize(new java.awt.Dimension(0, 0));
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-
         jButton3.setBackground(new java.awt.Color(51, 51, 51));
         jButton3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jButton3.setForeground(new java.awt.Color(204, 204, 204));
@@ -164,19 +156,32 @@ public class Transaksi extends javax.swing.JFrame {
         });
 
         jPanel4.setBackground(new java.awt.Color(38, 38, 38));
-        jPanel4.setLayout(new java.awt.GridLayout(4, 2, 5, 5));
+        jPanel4.setLayout(new java.awt.GridLayout(6, 2, 5, 5));
+
+        jLabel12.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel12.setText("Kode");
+        jPanel4.add(jLabel12);
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Nama Barang");
         jPanel4.add(jLabel4);
 
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("Harga");
-        jPanel4.add(jLabel5);
+        Kode.setBackground(new java.awt.Color(51, 51, 51));
+        Kode.setForeground(new java.awt.Color(204, 204, 204));
+        Kode.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                KodeActionPerformed(evt);
+            }
+        });
+        Kode.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                KodeKeyReleased(evt);
+            }
+        });
+        jPanel4.add(Kode);
 
-        NamaBarang.setEditable(false);
         NamaBarang.setBackground(new java.awt.Color(51, 51, 51));
         NamaBarang.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         NamaBarang.setForeground(new java.awt.Color(204, 204, 204));
@@ -185,23 +190,28 @@ public class Transaksi extends javax.swing.JFrame {
                 NamaBarangActionPerformed(evt);
             }
         });
+        NamaBarang.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                NamaBarangKeyReleased(evt);
+            }
+        });
         jPanel4.add(NamaBarang);
 
-        Harga.setEditable(false);
-        Harga.setBackground(new java.awt.Color(51, 51, 51));
-        Harga.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        Harga.setForeground(new java.awt.Color(204, 204, 204));
-        jPanel4.add(Harga);
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setText("Harga");
+        jPanel4.add(jLabel5);
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("Jumlah Barang");
         jPanel4.add(jLabel6);
 
-        jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel7.setText("Total Harga Barang");
-        jPanel4.add(jLabel7);
+        Harga.setEditable(false);
+        Harga.setBackground(new java.awt.Color(51, 51, 51));
+        Harga.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        Harga.setForeground(new java.awt.Color(204, 204, 204));
+        jPanel4.add(Harga);
 
         JumlahBarang.setBackground(new java.awt.Color(51, 51, 51));
         JumlahBarang.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -221,11 +231,34 @@ public class Transaksi extends javax.swing.JFrame {
         });
         jPanel4.add(JumlahBarang);
 
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel7.setText("Total Harga Barang");
+        jPanel4.add(jLabel7);
+        jPanel4.add(jLabel13);
+
         TotalHargaBarang.setEditable(false);
         TotalHargaBarang.setBackground(new java.awt.Color(51, 51, 51));
         TotalHargaBarang.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         TotalHargaBarang.setForeground(new java.awt.Color(204, 204, 204));
+        TotalHargaBarang.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TotalHargaBarangActionPerformed(evt);
+            }
+        });
         jPanel4.add(TotalHargaBarang);
+
+        jButton2.setBackground(new java.awt.Color(51, 51, 51));
+        jButton2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jButton2.setForeground(new java.awt.Color(204, 204, 204));
+        jButton2.setText("Tambah");
+        jButton2.setMinimumSize(new java.awt.Dimension(0, 0));
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        jPanel4.add(jButton2);
 
         jPanel5.setBackground(new java.awt.Color(38, 38, 38));
         jPanel5.setLayout(new java.awt.GridLayout(1, 2, 5, 5));
@@ -257,8 +290,7 @@ public class Transaksi extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jScrollPane1)))
             .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -269,8 +301,6 @@ public class Transaksi extends javax.swing.JFrame {
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -488,6 +518,7 @@ public class Transaksi extends javax.swing.JFrame {
         try {
 
             int jumlahBarang = Integer.parseInt(JumlahBarang.getText());
+//                JOptionPane.showMessageDialog(null, jumlahBarang > stok);
             if (jumlahBarang > stok) {
                 JumlahBarang.setText(Integer.toString(stok));
                 jumlahBarang = stok;
@@ -637,7 +668,7 @@ public class Transaksi extends javax.swing.JFrame {
             }
         }
         SetDataBarang();
-        
+
         NamaBarang.setText("");
         JumlahBarang.setText("");
         TotalHargaBarang.setText("");
@@ -712,6 +743,57 @@ public class Transaksi extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jTable1MouseClicked
 
+    private void NamaBarangKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_NamaBarangKeyReleased
+        // TODO add your handling code here:
+        DefaultTableModel tb = (DefaultTableModel) jTable2.getModel();
+        int totalRow = tb.getRowCount();
+        int col = tb.findColumn("nama");
+        for (int i = 0; i < totalRow; i++) {
+//            JOptionPane.showMessageDialog(null, tb.getValueAt(i, col).toString().toLowerCase());
+            if (tb.getValueAt(i, col).toString().toLowerCase().equals(NamaBarang.getText().toLowerCase())) {
+//                JOptionPane.showMessageDialog(null, tb.getValueAt(i, tb.findColumn("Id")).toString().toLowerCase());
+                NamaBarang.setText(tb.getValueAt(i, tb.findColumn("nama")).toString().toLowerCase());
+                Harga.setText(tb.getValueAt(i, tb.findColumn("harga")).toString().toLowerCase());
+                stok = (int) tb.getValueAt(i, tb.findColumn("stok"));
+                break;
+            } else {
+                NamaBarang.setText("");
+                Harga.setText("");
+            }
+
+        }
+    }//GEN-LAST:event_NamaBarangKeyReleased
+
+    private void TotalHargaBarangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TotalHargaBarangActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TotalHargaBarangActionPerformed
+
+    private void KodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_KodeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_KodeActionPerformed
+
+    private void KodeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_KodeKeyReleased
+        // TODO add your handling code here:
+        
+        DefaultTableModel tb = (DefaultTableModel) jTable2.getModel();
+        int totalRow = tb.getRowCount();
+        int col = tb.findColumn("id");
+        for (int i = 0; i < totalRow; i++) {
+//            JOptionPane.showMessageDialog(null, tb.getValueAt(i, col).toString().toLowerCase());
+            if (tb.getValueAt(i, col).toString().toLowerCase().equals(Kode.getText().toLowerCase())) {
+                NamaBarang.setText(tb.getValueAt(i, tb.findColumn("nama")).toString().toLowerCase());
+                Harga.setText(tb.getValueAt(i, tb.findColumn("harga")).toString().toLowerCase());
+                stok = (int) tb.getValueAt(i, tb.findColumn("stok"));
+                JOptionPane.showMessageDialog(null,  tb.getValueAt(i, tb.findColumn("stok")));
+                break;
+            } else {
+                Harga.setText("");
+                NamaBarang.setText("");
+            }
+
+        }
+    }//GEN-LAST:event_KodeKeyReleased
+
     /**
      * @param args the command line arguments
      */
@@ -772,7 +854,7 @@ public class Transaksi extends javax.swing.JFrame {
         rs = db.resultSet();
         try {
             while (rs.next()) {
-                String id = String.valueOf(rs.getInt("id"));
+                String id = String.valueOf(rs.getLong("id"));
                 String nama = rs.getString("nama_barang");
                 String stok = rs.getString("stok");
                 String harga = rs.getString("harga");
@@ -793,6 +875,7 @@ public class Transaksi extends javax.swing.JFrame {
     private javax.swing.JTextField Harga;
     private javax.swing.JTextField JumlahBarang;
     private javax.swing.JTextField Kembalian;
+    private javax.swing.JTextField Kode;
     private javax.swing.JTextField NamaBarang;
     private javax.swing.JTextField Pembayaran;
     private javax.swing.JTextField Search;
@@ -803,6 +886,8 @@ public class Transaksi extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

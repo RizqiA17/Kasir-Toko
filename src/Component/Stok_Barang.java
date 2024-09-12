@@ -169,7 +169,7 @@ public class Stok_Barang extends javax.swing.JPanel {
 
             while (rs.next()) {
                 no++;
-                String id = Integer.toString(rs.getInt("id"));
+                String id = Long.toString(rs.getLong("id"));
                 String nama = rs.getString("nama_barang");
                 String stok = rs.getString("stok");
                 String harga = rs.getString("harga");
