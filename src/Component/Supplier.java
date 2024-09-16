@@ -259,6 +259,11 @@ public class Supplier extends javax.swing.JPanel {
         Edit.setForeground(new java.awt.Color(204, 204, 204));
         Edit.setText("Edit");
         Edit.setEnabled(false);
+        Edit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EditActionPerformed(evt);
+            }
+        });
         jPanel13.add(Edit);
 
         jPanel9.add(jPanel13);
@@ -372,6 +377,15 @@ public class Supplier extends javax.swing.JPanel {
             ClearTable();
             SetDataTable();
         }
+
+        KodeSupplier.setText("");
+        Nama.setText("");
+        Email.setText("");
+        Telepon.setText("");
+        Rekening.setText("");
+        KodePos.setText("");
+        Alamat.setText("");
+        Fax.setText("");
     }//GEN-LAST:event_TambahActionPerformed
 
     private void FaxKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_FaxKeyReleased
@@ -438,6 +452,34 @@ public class Supplier extends javax.swing.JPanel {
         Tambah.setEnabled(false);
         Edit.setEnabled(true);
     }//GEN-LAST:event_jTable1MouseClicked
+
+    private void EditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditActionPerformed
+        // TODO add your handling code here:
+        String kode = KodeSupplier.getText();
+        String nama = Nama.getText();
+        String email = Email.getText();
+        String telepon = Telepon.getText();
+        String rekening = Rekening.getText();
+        String pos = KodePos.getText();
+        String alamat = Alamat.getText();
+        String fax = Fax.getText();
+
+        String query = "UPDATE supplier SET nama = '" + nama + "', email = '" + email + "', telepon = '" + telepon + "', rekening = '" + rekening + "', kode_pos = '" + pos + "', alamat = '" + alamat + "', fax  = '" + fax + "' WHERE kode = '" + kode + "'";
+        db.Query(query);
+        if (db.AddData() > 0) {
+            ClearTable();
+            SetDataTable();
+        }
+
+        KodeSupplier.setText("");
+        Nama.setText("");
+        Email.setText("");
+        Telepon.setText("");
+        Rekening.setText("");
+        KodePos.setText("");
+        Alamat.setText("");
+        Fax.setText("");
+    }//GEN-LAST:event_EditActionPerformed
 
     private void SetDataTable() {
         String query = "SELECT * FROM supplier";
