@@ -4,9 +4,12 @@
  */
 package Main_App;
 
+import Component.Data_Petugas;
 import Service.Database;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -18,11 +21,13 @@ public class Pendaftar extends javax.swing.JFrame {
 
     private Database db = new Database();
     private ResultSet rs;
+
     /**
      * Creates new form Pendaftar
      */
     public Pendaftar() {
         initComponents();
+        SetData();
     }
 
     /**
@@ -62,14 +67,14 @@ public class Pendaftar extends javax.swing.JFrame {
 
             },
             new String [] {
-                "No", "Nama", "Email", "No. HP", "Alamat"
+                "No", "Id", "Nama", "Email", "No. HP", "Alamat", "Terima", "Tolak"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, true, true
+                false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -83,6 +88,16 @@ public class Pendaftar extends javax.swing.JFrame {
         jTable5.setGridColor(new java.awt.Color(102, 102, 102));
         jTable5.setSelectionBackground(new java.awt.Color(51, 51, 51));
         jTable5.setSelectionForeground(new java.awt.Color(204, 204, 204));
+        jTable5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable5MouseClicked(evt);
+            }
+        });
+        jTable5.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTable5KeyPressed(evt);
+            }
+        });
         jScrollPane5.setViewportView(jTable5);
 
         jLabel5.setFont(new java.awt.Font("Cascadia Code", 1, 36)); // NOI18N
@@ -125,6 +140,53 @@ public class Pendaftar extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_jButton5ActionPerformed
 
+    private void jTable5KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable5KeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTable5KeyPressed
+
+    private void jTable5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable5MouseClicked
+        // TODO add your handling code here:
+        DefaultTableModel tbModel = (DefaultTableModel) jTable5.getModel();
+
+        int row = jTable5.getSelectedRow();
+        int column = jTable5.getSelectedColumn();
+
+        if (column == 6) {
+            int id = Integer.valueOf(tbModel.getValueAt(row, 1).toString());
+
+            String nama = (String) tbModel.getValueAt(row, 2);
+            String email = (String) tbModel.getValueAt(row, 3);
+            String no_hp = (String) tbModel.getValueAt(row, 4);
+            String alamat = (String) tbModel.getValueAt(row, 5);
+            String pass = null;
+
+            String query = "SELECT password FROM calon_karyawan WHERE id = " + id;
+            db.Query(query);
+            rs = db.resultSet();
+            try {
+                while (rs.next()) {
+                    pass = rs.getString("password");
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(Pendaftar.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            query = "INSERT INTO profile (id, nama, email, password, alamat, no_hp) VALUES(null, '" + nama + "', '" + email + "', '" + pass + "', '" + alamat + "', '" + no_hp + "')";
+            db.Query(query);
+            db.AddData();
+
+            query = "UPDATE calon_karyawan SET kondisi = 'Diterima'";
+            db.Query(query);
+            db.AddData();
+        } else if (column == 7) {
+            String query = "UPDATE calon_karyawan SET kondisi = 'Ditolak'";
+            db.Query(query);
+            db.AddData();
+        }
+        ClearTable();
+        SetData();
+    }//GEN-LAST:event_jTable5MouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -159,8 +221,20 @@ public class Pendaftar extends javax.swing.JFrame {
             }
         });
     }
-    
-    private void SetData(){
+
+    public void ClearTable() {
+        DefaultTableModel tbModel = (DefaultTableModel) jTable5.getModel();
+        int lenght = tbModel.getRowCount();
+        for (int i = 0; i < lenght; i++) {
+            try {
+                tbModel.removeRow(0);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
+        }
+    }
+
+    private void SetData() {
         String query = "SELECT * FROM calon_karyawan";
         db.Query(query);
         rs = db.resultSet();
@@ -175,10 +249,13 @@ public class Pendaftar extends javax.swing.JFrame {
                 String no_hp = rs.getString("no_hp");
                 String alamat = rs.getString("alamat");
 
-                String tbData[] = {Integer.toString(no), id, nama, email, no_hp, alamat};
+                String tbData[] = {Integer.toString(no), id, nama, email, no_hp, alamat, "Terima", "Tolak"};
                 DefaultTableModel tbModel = (DefaultTableModel) jTable5.getModel();
 
-                tbModel.addRow(tbData);
+                if ("Pending".equals(rs.getString("kondisi"))) {
+                    tbModel.addRow(tbData);
+                }
+
             }
 
         } catch (SQLException ex) {

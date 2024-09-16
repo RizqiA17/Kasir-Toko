@@ -56,9 +56,11 @@ public class Data_Petugas extends javax.swing.JPanel {
         jButton2 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
         Cari = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
 
@@ -163,6 +165,12 @@ public class Data_Petugas extends javax.swing.JPanel {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 NoHPKeyPressed(evt);
             }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                NoHPKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                NoHPKeyTyped(evt);
+            }
         });
         jPanel5.add(NoHP);
 
@@ -188,6 +196,7 @@ public class Data_Petugas extends javax.swing.JPanel {
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Cari");
         jPanel3.add(jLabel5);
+        jPanel3.add(jLabel8);
 
         jPanel7.setBackground(new java.awt.Color(38, 38, 38));
 
@@ -195,7 +204,7 @@ public class Data_Petugas extends javax.swing.JPanel {
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 633, Short.MAX_VALUE)
+            .addGap(0, 420, Short.MAX_VALUE)
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -231,6 +240,16 @@ public class Data_Petugas extends javax.swing.JPanel {
             }
         });
         jPanel3.add(jButton1);
+
+        jButton3.setBackground(new java.awt.Color(51, 51, 51));
+        jButton3.setForeground(new java.awt.Color(204, 204, 204));
+        jButton3.setText("Refresh");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jButton3);
 
         jPanel6.add(jPanel3);
 
@@ -292,30 +311,6 @@ public class Data_Petugas extends javax.swing.JPanel {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         Pendaftar.main(null);
-//        DefaultTableModel tbModel = (DefaultTableModel) jTable1.getModel();
-//        //        tbModel.removeRow(tbModel.getRowCount() - 1);
-//        int lenght = tbModel.getRowCount();
-//        for (int i = 0; i < lenght; i++) {
-//            //            JOptionPane.showMessageDialog(null, tbModel.getRowCount());
-//            try {
-//                tbModel.removeRow(0);
-//            } catch (Exception e) {
-//                JOptionPane.showMessageDialog(null, e);
-//            }
-//        }
-//
-//        String nama = NamaBarang.getText();
-//        int stok = Integer.valueOf(Stok.getText());
-//        int harga = Integer.valueOf(Harga.getText());
-//        String query = "INSERT INTO `gudang` (`id`, `nama_barang`, `harga`, `stok`, `tgl_masuk`) VALUES (null, '" + nama + "', '" + harga + "', '" + stok + "', current_timestamp())";
-//        Database db = new Database();
-//        db.Query(query);
-//        if (db.AddData() > 0) {
-//            SetDataBarang();
-//            NamaBarang.setText("");
-//            Stok.setText("");
-//            Harga.setText("");
-//        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void CariKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_CariKeyReleased
@@ -356,16 +351,27 @@ public class Data_Petugas extends javax.swing.JPanel {
 
     private void NoHPKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_NoHPKeyPressed
         // TODO add your handling code here:
-
-        char c = evt.getKeyChar();
-        if (Character.isLetter(c)) {
-            NoHP.setEditable(false);
-        } else {
-            NoHP.setEditable(true);
-        }
     }//GEN-LAST:event_NoHPKeyPressed
 
-    private void ClearTable() {
+    private void NoHPKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_NoHPKeyTyped
+        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+        char[]s = NoHP.getText().toCharArray();
+        NoHP.setEditable(s.length < 15 && !Character.isLetter(c));
+    }//GEN-LAST:event_NoHPKeyTyped
+
+    private void NoHPKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_NoHPKeyReleased
+        // TODO add your handling code here:
+        NoHP.setEditable(true);
+    }//GEN-LAST:event_NoHPKeyReleased
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        ClearTable();
+        SetDataPetugas();
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    public void ClearTable() {
         DefaultTableModel tbModel = (DefaultTableModel) jTable1.getModel();
         int lenght = tbModel.getRowCount();
         for (int i = 0; i < lenght; i++) {
@@ -377,7 +383,7 @@ public class Data_Petugas extends javax.swing.JPanel {
         }
     }
 
-    private void SetDataPetugas() {
+    public void SetDataPetugas() {
         String query = "SELECT * FROM profile";
         db.Query(query);
         ResultSet rs = db.resultSet();
@@ -412,6 +418,7 @@ public class Data_Petugas extends javax.swing.JPanel {
     private javax.swing.JTextField Password;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -419,6 +426,7 @@ public class Data_Petugas extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;

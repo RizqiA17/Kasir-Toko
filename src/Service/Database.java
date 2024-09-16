@@ -33,15 +33,6 @@ public class Database {
         }
         return rs;
     }
-//    
-//    public int RowCount(){
-//        int result = 0;
-//        conn.config();
-//        try{
-//            String sql = query;
-//            result = conn.stm.exec
-//        }
-//    }
 
     public int AddData() {
         int result = 0;

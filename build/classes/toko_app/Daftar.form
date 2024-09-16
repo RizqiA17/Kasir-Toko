@@ -418,6 +418,10 @@
                       <Dimension value="[74, 42]"/>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="NoHPInputKeyReleased"/>
+                    <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="NoHPInputKeyTyped"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JPasswordField" name="PassInput">
                   <Properties>

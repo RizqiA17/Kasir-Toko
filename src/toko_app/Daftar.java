@@ -4,8 +4,10 @@
  */
 package toko_app;
 
+import Service.Database;
 import java.awt.Point;
 import java.awt.Toolkit;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
 /**
@@ -13,6 +15,8 @@ import javax.swing.SwingUtilities;
  * @author smart user
  */
 public class Daftar extends javax.swing.JFrame {
+
+    Database db = new Database();
 
     /**
      * Creates new form Daftar
@@ -160,6 +164,14 @@ public class Daftar extends javax.swing.JFrame {
         NoHPInput.setForeground(new java.awt.Color(204, 204, 204));
         NoHPInput.setMinimumSize(new java.awt.Dimension(68, 20));
         NoHPInput.setPreferredSize(new java.awt.Dimension(74, 42));
+        NoHPInput.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                NoHPInputKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                NoHPInputKeyTyped(evt);
+            }
+        });
 
         PassInput.setBackground(new java.awt.Color(51, 51, 51));
         PassInput.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -330,6 +342,18 @@ public class Daftar extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        String nama = NameInput.getText();
+        String email = EmailInput.getText();
+        String pass = PassInput.getText();
+        String alamat = AlamatInput.getText();
+        String no_hp = NoHPInput.getText();
+        String query = "INSERT INTO calon_karyawan (id, nama, email, password, no_hp, alamat, kondisi) VALUES(null, '" + nama + "', '" + email + "', '" + pass + "', '" + no_hp + "', '" + alamat + "', 'Pending');";
+        db.Query(query);
+        if (db.AddData() > 0) {
+            JOptionPane.showMessageDialog(null, "Berhasil Mendaftar!!!");
+            Home.main(null);
+            dispose();
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -347,6 +371,22 @@ public class Daftar extends javax.swing.JFrame {
             PassInput.setEchoChar('*');
         }
     }//GEN-LAST:event_PassRevealCheckActionPerformed
+
+    private void NoHPInputKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_NoHPInputKeyReleased
+        // TODO add your handling code here:
+        NoHPInput.setEditable(true);
+    }//GEN-LAST:event_NoHPInputKeyReleased
+
+    private void NoHPInputKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_NoHPInputKeyTyped
+        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+        char[] no = NoHPInput.getText().toCharArray();
+        if (Character.isLetter(c) || no.length >= 15) {
+            NoHPInput.setEditable(false);
+        } else {
+            NoHPInput.setEditable(true);
+        }
+    }//GEN-LAST:event_NoHPInputKeyTyped
 
     /**
      * @param args the command line arguments
@@ -399,7 +439,7 @@ public class Daftar extends javax.swing.JFrame {
             }
         });
     }
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField AlamatInput;
     private javax.swing.JTextField EmailInput;

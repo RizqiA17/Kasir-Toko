@@ -101,6 +101,11 @@ public class Data_Barang extends javax.swing.JPanel {
         Kode.setBackground(new java.awt.Color(51, 51, 51));
         Kode.setForeground(new java.awt.Color(204, 204, 204));
         Kode.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        Kode.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                KodeFocusLost(evt);
+            }
+        });
         Kode.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 KodeActionPerformed(evt);
@@ -109,6 +114,9 @@ public class Data_Barang extends javax.swing.JPanel {
         Kode.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 KodeKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                KodeKeyTyped(evt);
             }
         });
         jPanel1.add(Kode);
@@ -141,6 +149,12 @@ public class Data_Barang extends javax.swing.JPanel {
         Harga.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 HargaKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                HargaKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                HargaKeyTyped(evt);
             }
         });
         jPanel1.add(Harga);
@@ -182,6 +196,12 @@ public class Data_Barang extends javax.swing.JPanel {
         StokInput.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 StokInputKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                StokInputKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                StokInputKeyTyped(evt);
             }
         });
         jPanel3.add(StokInput);
@@ -295,11 +315,11 @@ public class Data_Barang extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+
+        // Clear Table
         DefaultTableModel tbModel = (DefaultTableModel) jTable1.getModel();
-        //        tbModel.removeRow(tbModel.getRowCount() - 1);
         int lenght = tbModel.getRowCount();
         for (int i = 0; i < lenght; i++) {
-            //            JOptionPane.showMessageDialog(null, tbModel.getRowCount());
             try {
                 tbModel.removeRow(0);
             } catch (Exception e) {
@@ -307,12 +327,17 @@ public class Data_Barang extends javax.swing.JPanel {
             }
         }
 
+        // Initialitation Variable
         String nama = NamaBarang.getText().toLowerCase();
-        String kodeBarang = (Kode.getText());
+        String kodeBarang = Kode.getText();
         int stok = Integer.valueOf(StokInput.getText());
         int harga = Integer.valueOf(Harga.getText());
-        String queryGetBarang = "SELECT * FROM `barang` WHERE nama_barang = '" + nama + "'";
+
+        // Initialisation Query Get Barang
+        String queryGetBarang = "SELECT * FROM `barang` WHERE id = '" + kodeBarang + "'";
         String query = queryGetBarang;
+
+        // Get Supplier Id
         String supplier = (String) jComboBox1.getSelectedItem();
         String idSupplier = "";
         query = "SELECT * FROM `supplier` WHERE nama = '" + supplier + "'";
@@ -326,19 +351,23 @@ public class Data_Barang extends javax.swing.JPanel {
             Logger.getLogger(Data_Barang.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-//        JOptionPane.showMessageDialog(null, idSupplier);
+        // Data Algoritm
         rs = DataBarang(queryGetBarang);
         try {
+
             int idBarang = -1;
+
+            // Calc New Stok
             if (rs.next()) {
                 idBarang = rs.getInt("id");
                 int totalStok = stok + rs.getInt("stok");
-                query = "UPDATE `barang` SET nama = '" + totalStok + "' WHERE id = '" + idBarang + "'";
+                query = "UPDATE `barang` SET stok = '" + totalStok + "' WHERE id = '" + idBarang + "'";
                 db.Query(query);
-                if (db.AddData() > 0) {
-//            SetDataBarang();
+                if (db.AddData() == 0) {
+                    JOptionPane.showMessageDialog(null, "GAGAL MENAMBAH STOK!!!");
                 }
-            } else if (!rs.next()) {
+            } // Add New Barang
+            else if (!rs.next()) {
                 query = "INSERT INTO `barang` (`id`, `nama_barang`, `harga`, `stok`, `id_supplier`) VALUES(" + kodeBarang + ", '" + nama + "', '" + harga + "', '" + stok + "', '" + idSupplier + "')";
                 db.Query(query);
                 if (db.AddData() > 0) {
@@ -348,10 +377,14 @@ public class Data_Barang extends javax.swing.JPanel {
                     }
                 }
             }
+
+            // Add History
             query = "INSERT INTO `riwayat_barang` (`id`, `id_barang`, `jumlah_barang`) VALUES (null, '" + kodeBarang + "', '" + stok + "')";
-//            JOptionPane.showMessageDialog(null, query);
             db.Query(query);
+
+            // Set TextField Null
             if (db.AddData() > 0) {
+                Kode.setText("");
                 NamaBarang.setText("");
                 StokInput.setText("");
                 Harga.setText("");
@@ -360,6 +393,8 @@ public class Data_Barang extends javax.swing.JPanel {
         } catch (SQLException ex) {
             Logger.getLogger(Data_Barang.class.getName()).log(Level.SEVERE, null, ex);
         }
+
+        // Reset Table
         SetDataBarang();
         Harga.setEditable(true);
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -387,15 +422,15 @@ public class Data_Barang extends javax.swing.JPanel {
         int col = tb.findColumn("Nama Barang");
         int totalRow = tb.getRowCount();
         for (int i = 0; i < totalRow; i++) {
-//            JOptionPane.showMessageDialog(null, tb.getValueAt(i, col).toString().toLowerCase());
             if (tb.getValueAt(i, col).toString().toLowerCase().equals(NamaBarang.getText().toLowerCase())) {
-//                JOptionPane.showMessageDialog(null, tb.getValueAt(i, tb.findColumn("Id")).toString().toLowerCase());
+                Kode.setText(tb.getValueAt(i, tb.findColumn("Kode")).toString());
                 Harga.setText(tb.getValueAt(i, tb.findColumn("Harga")).toString().toLowerCase());
                 Harga.setEditable(false);
                 jLabel4.setText("Stok Masuk");
                 break;
             } else {
                 jLabel4.setText("Stok");
+                Kode.setText("");
                 Harga.setEditable(true);
                 Harga.setText("");
             }
@@ -415,24 +450,10 @@ public class Data_Barang extends javax.swing.JPanel {
 
     private void HargaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_HargaKeyPressed
         // TODO add your handling code here:
-
-        char c = evt.getKeyChar();
-        if (Character.isLetter(c)) {
-            Harga.setEditable(false);
-        } else {
-            Harga.setEditable(true);
-        }
     }//GEN-LAST:event_HargaKeyPressed
 
     private void StokInputKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_StokInputKeyPressed
         // TODO add your handling code here:
-
-        char c = evt.getKeyChar();
-        if (Character.isLetter(c)) {
-            StokInput.setEditable(false);
-        } else {
-            StokInput.setEditable(true);
-        }
     }//GEN-LAST:event_StokInputKeyPressed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
@@ -445,14 +466,67 @@ public class Data_Barang extends javax.swing.JPanel {
 
     private void KodeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_KodeKeyReleased
         // TODO add your handling code here:
+        Kode.setEditable(true);
 
-        char c = evt.getKeyChar();
-        if (Character.isLetter(c)) {
-            StokInput.setEditable(false);
-        } else {
-            StokInput.setEditable(true);
+        DefaultTableModel tb = (DefaultTableModel) jTable1.getModel();
+        int col = tb.findColumn("Kode");
+        int totalRow = tb.getRowCount();
+        for (int i = 0; i < totalRow; i++) {
+            if (tb.getValueAt(i, col).toString().toLowerCase().equals(Kode.getText().toLowerCase())) {
+                NamaBarang.setText(tb.getValueAt(i, tb.findColumn("Nama Barang")).toString());
+                Harga.setText(tb.getValueAt(i, tb.findColumn("Harga")).toString().toLowerCase());
+                Harga.setEditable(false);
+                jLabel4.setText("Stok Masuk");
+                break;
+            } else {
+                jLabel4.setText("Stok");
+                Harga.setEditable(true);
+                Harga.setText("");
+            }
         }
     }//GEN-LAST:event_KodeKeyReleased
+
+    private void KodeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_KodeKeyTyped
+        // TODO add your handling code here:
+        Kode.setEditable(IsNumber(evt));
+    }//GEN-LAST:event_KodeKeyTyped
+
+    private void HargaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_HargaKeyReleased
+        // TODO add your handling code here:
+        Harga.setEditable(true);
+    }//GEN-LAST:event_HargaKeyReleased
+
+    private void HargaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_HargaKeyTyped
+        // TODO add your handling code here:
+        Harga.setEditable(IsNumber(evt));
+    }//GEN-LAST:event_HargaKeyTyped
+
+    private void StokInputKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_StokInputKeyTyped
+        // TODO add your handling code here:
+        StokInput.setEditable(IsNumber(evt));
+    }//GEN-LAST:event_StokInputKeyTyped
+
+    private void StokInputKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_StokInputKeyReleased
+        // TODO add your handling code here:
+        StokInput.setEditable(true);
+    }//GEN-LAST:event_StokInputKeyReleased
+
+    private void KodeFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_KodeFocusLost
+        // TODO add your handling code here:
+        DefaultTableModel tb = (DefaultTableModel) jTable1.getModel();
+        int col = tb.findColumn("Kode");
+        int totalRow = tb.getRowCount();
+
+        for (int i = 0; i < totalRow; i++) {
+            System.out.print(!tb.getValueAt(i, tb.findColumn("Nama Barang")).toString().equals(NamaBarang.getText().toLowerCase()));
+            if (tb.getValueAt(i, tb.findColumn("Nama Barang")).toString().equals(NamaBarang.getText().toLowerCase())) {
+                break;
+            }
+            else{
+                NamaBarang.setText("");
+            }
+        }
+    }//GEN-LAST:event_KodeFocusLost
 
     private ResultSet DataBarang(String query) {
         db.Query(query);
@@ -517,6 +591,11 @@ public class Data_Barang extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
 
+    }
+
+    private boolean IsNumber(java.awt.event.KeyEvent evt) {
+        char c = evt.getKeyChar();
+        return !Character.isLetter(c);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
