@@ -228,6 +228,9 @@ public class Transaksi extends javax.swing.JFrame {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 JumlahBarangKeyReleased(evt);
             }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                JumlahBarangKeyTyped(evt);
+            }
         });
         jPanel4.add(JumlahBarang);
 
@@ -519,14 +522,15 @@ public class Transaksi extends javax.swing.JFrame {
         try {
 
             int jumlahBarang = Integer.parseInt(JumlahBarang.getText());
-//                JOptionPane.showMessageDialog(null, jumlahBarang > stok);
             if (jumlahBarang > stok) {
                 JumlahBarang.setText(Integer.toString(stok));
                 jumlahBarang = stok;
+//                JOptionPane.showMessageDialog(null, jumlahBarang + " " + stok);
             } else {
                 JumlahBarang.setEditable(true);
             }
             int jumlahHarga = jumlahBarang * harga;
+//            JOptionPane.showMessageDialog(null, harga);
             TotalHargaBarang.setText(Integer.toString(jumlahHarga));
         } catch (Exception e) {
             TotalHargaBarang.setText(Integer.toString(harga));
@@ -608,12 +612,6 @@ public class Transaksi extends javax.swing.JFrame {
 
     private void JumlahBarangKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JumlahBarangKeyPressed
         // TODO add your handling code here:
-        char c = evt.getKeyChar();
-        if (Character.isLetter(c)) {
-            JumlahBarang.setEditable(false);
-        } else {
-            JumlahBarang.setEditable(true);
-        }
     }//GEN-LAST:event_JumlahBarangKeyPressed
 
     private void TotalTransaksiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TotalTransaksiActionPerformed
@@ -642,7 +640,7 @@ public class Transaksi extends javax.swing.JFrame {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
-        
+
         // Insert Riwayat Barang
         int lenght = tbModel.getRowCount();
         for (int i = 0; i < lenght; i++) {
@@ -669,7 +667,7 @@ public class Transaksi extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, e);
             }
         }
-        
+
         // Refresh List Barang
         tbModel = (DefaultTableModel) jTable2.getModel();
         lenght = tbModel.getRowCount();
@@ -788,6 +786,20 @@ public class Transaksi extends javax.swing.JFrame {
     private void KodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_KodeActionPerformed
         // TODO add your handling code here:
         JumlahBarang.requestFocus();
+        idBarang = Kode.getText();
+        harga = Integer.parseInt(Harga.getText());
+        TotalHargaBarang.setText(Harga.getText());
+
+        DefaultTableModel tb = (DefaultTableModel) jTable2.getModel();
+        for (int i = 0; i < tb.getRowCount(); i++) {
+//                JOptionPane.showMessageDialog(null, tb.getValueAt(i, 2));
+//                JOptionPane.showMessageDialog(null, tb.getValueAt(i, 0) + " "+ idBarang);
+            if (idBarang.equals((String) tb.getValueAt(i, 0))) {
+                stok = Integer.parseInt((String) tb.getValueAt(i, 2));
+//                JOptionPane.showMessageDialog(null, stok + " " + idBarang);
+                break;
+            }
+        }
     }//GEN-LAST:event_KodeActionPerformed
 
     private void KodeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_KodeKeyReleased
@@ -810,6 +822,16 @@ public class Transaksi extends javax.swing.JFrame {
 
         }
     }//GEN-LAST:event_KodeKeyReleased
+
+    private void JumlahBarangKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JumlahBarangKeyTyped
+        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+        if (Character.isLetter(c)) {
+            JumlahBarang.setEditable(false);
+        } else {
+            JumlahBarang.setEditable(true);
+        }
+    }//GEN-LAST:event_JumlahBarangKeyTyped
 
     /**
      * @param args the command line arguments

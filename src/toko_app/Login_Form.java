@@ -30,7 +30,7 @@ public class Login_Form extends javax.swing.JFrame {
     public Login_Form() {
         initComponents();
         FullScreen();
-        Home_Admin.main(null);
+//        Home_Admin.main(null);
 //        Home_Karyawan.main(null);
     }
 
@@ -57,6 +57,7 @@ public class Login_Form extends javax.swing.JFrame {
         PassInput = new javax.swing.JPasswordField();
         jPanel6 = new javax.swing.JPanel();
         PassRevealCheck = new javax.swing.JCheckBox();
+        jLabel4 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
 
@@ -183,20 +184,26 @@ public class Login_Form extends javax.swing.JFrame {
             }
         });
 
+        jLabel4.setForeground(new java.awt.Color(204, 0, 0));
+
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                .addContainerGap(371, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 353, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(PassRevealCheck)
                 .addContainerGap())
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(PassRevealCheck, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(PassRevealCheck, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -262,7 +269,9 @@ public class Login_Form extends javax.swing.JFrame {
                     Home_Admin.main(null);
                     dispose();
                 }
+                break;
             }
+            jLabel4.setText("Email atau Password salah");
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
@@ -280,6 +289,7 @@ public class Login_Form extends javax.swing.JFrame {
 
     private void PassInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PassInputActionPerformed
         // TODO add your handling code here:
+        jButton1.doClick();
     }//GEN-LAST:event_PassInputActionPerformed
 
     private void EmailInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EmailInputActionPerformed
@@ -347,6 +357,7 @@ public class Login_Form extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;

@@ -22,7 +22,7 @@ import javax.swing.table.TableRowSorter;
  * @author smart user
  */
 public class Data_Barang extends javax.swing.JPanel {
-
+    
     private Database db = new Database();
     private ResultSet rs;
 
@@ -61,10 +61,15 @@ public class Data_Barang extends javax.swing.JPanel {
         StokInput = new javax.swing.JTextField();
         jComboBox1 = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        Cari = new javax.swing.JTextField();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jLabel5 = new javax.swing.JLabel();
-        Cari = new javax.swing.JTextField();
 
         jLabel7.setText("jLabel7");
 
@@ -79,7 +84,7 @@ public class Data_Barang extends javax.swing.JPanel {
         jLabel1.setFocusable(false);
 
         jPanel6.setBackground(new java.awt.Color(38, 38, 38));
-        jPanel6.setLayout(new java.awt.GridLayout(2, 1, 5, 5));
+        jPanel6.setLayout(new java.awt.GridLayout(3, 1, 5, 5));
 
         jPanel1.setBackground(new java.awt.Color(38, 38, 38));
         jPanel1.setForeground(new java.awt.Color(204, 204, 204));
@@ -184,7 +189,7 @@ public class Data_Barang extends javax.swing.JPanel {
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 32, Short.MAX_VALUE)
+            .addGap(0, 26, Short.MAX_VALUE)
         );
 
         jPanel3.add(jPanel7);
@@ -232,6 +237,51 @@ public class Data_Barang extends javax.swing.JPanel {
 
         jPanel6.add(jPanel3);
 
+        jPanel2.setBackground(new java.awt.Color(38, 38, 38));
+        jPanel2.setLayout(new java.awt.GridLayout(2, 3, 5, 5));
+
+        jLabel5.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel5.setText("Cari");
+        jPanel2.add(jLabel5);
+        jPanel2.add(jLabel10);
+        jPanel2.add(jLabel9);
+
+        Cari.setBackground(new java.awt.Color(51, 51, 51));
+        Cari.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        Cari.setForeground(new java.awt.Color(204, 204, 204));
+        Cari.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        Cari.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                CariKeyReleased(evt);
+            }
+        });
+        jPanel2.add(Cari);
+
+        jButton2.setBackground(new java.awt.Color(51, 51, 51));
+        jButton2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jButton2.setForeground(new java.awt.Color(204, 204, 204));
+        jButton2.setText("Refresh");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton2);
+
+        jButton3.setBackground(new java.awt.Color(51, 51, 51));
+        jButton3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jButton3.setForeground(new java.awt.Color(204, 204, 204));
+        jButton3.setText("Edit");
+        jButton3.setEnabled(false);
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton3);
+
+        jPanel6.add(jPanel2);
+
         jTable1.setBackground(new java.awt.Color(51, 51, 51));
         jTable1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jTable1.setForeground(new java.awt.Color(204, 204, 204));
@@ -268,19 +318,6 @@ public class Data_Barang extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(jTable1);
 
-        jLabel5.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel5.setText("Cari");
-
-        Cari.setBackground(new java.awt.Color(51, 51, 51));
-        Cari.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        Cari.setForeground(new java.awt.Color(204, 204, 204));
-        Cari.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        Cari.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                CariKeyReleased(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -290,11 +327,7 @@ public class Data_Barang extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1)
                     .addComponent(jPanel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(Cari)))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -302,13 +335,9 @@ public class Data_Barang extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Cari, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 309, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -317,15 +346,7 @@ public class Data_Barang extends javax.swing.JPanel {
         // TODO add your handling code here:
 
         // Clear Table
-        DefaultTableModel tbModel = (DefaultTableModel) jTable1.getModel();
-        int lenght = tbModel.getRowCount();
-        for (int i = 0; i < lenght; i++) {
-            try {
-                tbModel.removeRow(0);
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, e);
-            }
-        }
+        ClearTable();
 
         // Initialitation Variable
         String nama = NamaBarang.getText().toLowerCase();
@@ -354,7 +375,7 @@ public class Data_Barang extends javax.swing.JPanel {
         // Data Algoritm
         rs = DataBarang(queryGetBarang);
         try {
-
+            
             int idBarang = -1;
 
             // Calc New Stok
@@ -389,7 +410,7 @@ public class Data_Barang extends javax.swing.JPanel {
                 StokInput.setText("");
                 Harga.setText("");
             }
-
+            
         } catch (SQLException ex) {
             Logger.getLogger(Data_Barang.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -425,14 +446,18 @@ public class Data_Barang extends javax.swing.JPanel {
             if (tb.getValueAt(i, col).toString().toLowerCase().equals(NamaBarang.getText().toLowerCase())) {
                 Kode.setText(tb.getValueAt(i, tb.findColumn("Kode")).toString());
                 Harga.setText(tb.getValueAt(i, tb.findColumn("Harga")).toString().toLowerCase());
-                Harga.setEditable(false);
+//                Harga.setEditable(false);
                 jLabel4.setText("Stok Masuk");
+                jButton3.setEnabled(true);
+//                StokInput.requestFocus();
+//                NamaBarang.setEditable(false);
                 break;
             } else {
                 jLabel4.setText("Stok");
-                Kode.setText("");
-                Harga.setEditable(true);
-                Harga.setText("");
+//                Kode.setText("");
+//                Harga.setEditable(true);
+                jButton3.setEnabled(false);
+//                Harga.setText("");
             }
         }
     }//GEN-LAST:event_NamaBarangKeyReleased
@@ -467,21 +492,26 @@ public class Data_Barang extends javax.swing.JPanel {
     private void KodeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_KodeKeyReleased
         // TODO add your handling code here:
         Kode.setEditable(true);
-
+        
         DefaultTableModel tb = (DefaultTableModel) jTable1.getModel();
         int col = tb.findColumn("Kode");
         int totalRow = tb.getRowCount();
         for (int i = 0; i < totalRow; i++) {
             if (tb.getValueAt(i, col).toString().toLowerCase().equals(Kode.getText().toLowerCase())) {
                 NamaBarang.setText(tb.getValueAt(i, tb.findColumn("Nama Barang")).toString());
+//                NamaBarang.setEditable(false);
                 Harga.setText(tb.getValueAt(i, tb.findColumn("Harga")).toString().toLowerCase());
-                Harga.setEditable(false);
+//                Harga.setEditable(false);
                 jLabel4.setText("Stok Masuk");
+                jButton3.setEnabled(true);
                 break;
             } else {
+//                NamaBarang.setText("");
+//                NamaBarang.setEditable(true);
                 jLabel4.setText("Stok");
                 Harga.setEditable(true);
                 Harga.setText("");
+                jButton3.setEnabled(false);
             }
         }
     }//GEN-LAST:event_KodeKeyReleased
@@ -516,30 +546,67 @@ public class Data_Barang extends javax.swing.JPanel {
         DefaultTableModel tb = (DefaultTableModel) jTable1.getModel();
         int col = tb.findColumn("Kode");
         int totalRow = tb.getRowCount();
-
+        
         for (int i = 0; i < totalRow; i++) {
             System.out.print(!tb.getValueAt(i, tb.findColumn("Nama Barang")).toString().equals(NamaBarang.getText().toLowerCase()));
             if (tb.getValueAt(i, tb.findColumn("Nama Barang")).toString().equals(NamaBarang.getText().toLowerCase())) {
                 break;
-            }
-            else{
+            } else {
                 NamaBarang.setText("");
             }
         }
     }//GEN-LAST:event_KodeFocusLost
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        ClearTable();
+        SetDataBarang();
+        ResetSupplierOption();
+        SetSupplierOption();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        String namaBarang = NamaBarang.getText();
+        String harga = Harga.getText();
+        String id = Kode.getText();
+        
+        String supplier = (String) jComboBox1.getSelectedItem();
+        String idSupplier = "";
+        String query = "SELECT * FROM `supplier` WHERE nama = '" + supplier + "'";
+        db.Query(query);
+        rs = db.resultSet();
+        try {
+            while (rs.next()) {
+                idSupplier = rs.getString("id");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Data_Barang.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        query = "UPDATE barang SET nama_barang = '" + namaBarang + "', harga = '" + harga + "', id_supplier = " + idSupplier + " WHERE id = " + id + ";";
+        db.Query(query);
+        if (db.AddData() > 0) {
+            JOptionPane.showMessageDialog(null, "Berhasil Mengedit");
+        } else {
+            JOptionPane.showMessageDialog(null, "Gagal Mengedit");
+        }
+        ClearTable();
+        SetDataBarang();
+    }//GEN-LAST:event_jButton3ActionPerformed
+    
     private ResultSet DataBarang(String query) {
         db.Query(query);
         return db.resultSet();
     }
-
+    
     private void SetDataBarang() {
         String query = "SELECT * FROM barang, supplier WHERE barang.id_supplier = supplier.id";
         db.Query(query);
         rs = db.resultSet();
         try {
             int no = 0;
-
+            
             while (rs.next()) {
                 no++;
                 String id = Long.toString(rs.getLong("id"));
@@ -547,57 +614,72 @@ public class Data_Barang extends javax.swing.JPanel {
                 String stok = rs.getString("stok");
                 String harga = rs.getString("harga");
                 String supplier = rs.getString("supplier.nama");
-
+                
                 String tbData[] = {Integer.toString(no), id, nama, harga, stok, supplier};
                 DefaultTableModel tbModel = (DefaultTableModel) jTable1.getModel();
-
+                
                 tbModel.addRow(tbData);
             }
-
+            
         } catch (SQLException ex) {
-
+            
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
     }
-
+    
     private void SetSupplierOption() {
         int row = 0;
-
+        
         try {
             for (int i = 0; i < 2; i++) {
                 String query = "SELECT kode, nama FROM supplier";
                 db.Query(query);
                 rs = db.resultSet();
-
+                
                 if (i < 1) {
                     while (rs.next()) {
                         row++;
                     }
                 }
             }
-
+            
             String model[] = new String[row];
             DefaultComboBoxModel<String> comboBoxModel = new DefaultComboBoxModel<>();
-
+            
             int i = 0;
             while (rs.next()) {
                 model[i] = rs.getString("nama");
                 comboBoxModel.addElement(model[i]);
                 i++;
             }
-
+            
             jComboBox1.setModel(comboBoxModel);
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
-
+        
     }
-
+    
+    private void ResetSupplierOption() {
+        jComboBox1.removeAllItems();
+    }
+    
     private boolean IsNumber(java.awt.event.KeyEvent evt) {
         char c = evt.getKeyChar();
         return !Character.isLetter(c);
     }
-
+    
+    private void ClearTable() {
+        DefaultTableModel tbModel = (DefaultTableModel) jTable1.getModel();
+        int lenght = tbModel.getRowCount();
+        for (int i = 0; i < lenght; i++) {
+            try {
+                tbModel.removeRow(0);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
+        }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField Cari;
     private javax.swing.JTextField Harga;
@@ -605,8 +687,11 @@ public class Data_Barang extends javax.swing.JPanel {
     private javax.swing.JTextField NamaBarang;
     private javax.swing.JTextField StokInput;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -614,7 +699,9 @@ public class Data_Barang extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;

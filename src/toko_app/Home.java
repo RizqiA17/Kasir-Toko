@@ -229,8 +229,8 @@ public class Home extends javax.swing.JFrame {
             }
         });
     }
-    
-     private void FullScreen() {
+
+    private void FullScreen() {
         getContentPane().setPreferredSize(Toolkit.getDefaultToolkit().getScreenSize());
         pack();
         setResizable(false);
