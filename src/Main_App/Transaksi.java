@@ -530,7 +530,6 @@ public class Transaksi extends javax.swing.JFrame {
                 JumlahBarang.setEditable(true);
             }
             int jumlahHarga = jumlahBarang * harga;
-//            JOptionPane.showMessageDialog(null, harga);
             TotalHargaBarang.setText(Integer.toString(jumlahHarga));
         } catch (Exception e) {
             TotalHargaBarang.setText(Integer.toString(harga));
@@ -546,48 +545,6 @@ public class Transaksi extends javax.swing.JFrame {
             jmlhBarang = JumlahBarang.getText();
         }
         DefaultTableModel tbModel = (DefaultTableModel) jTable1.getModel();
-
-//        int lenght = tbModel.getRowCount();
-//        int totalHarga = Integer.parseInt(TotalHargaBarang.getText());
-//        boolean addData = true;
-//        if (lenght >= 0) {
-//            for (int i = 0; i < lenght; i++) {
-//                JOptionPane.showMessageDialog(null, i);
-//                if (Integer.parseInt(idBarang) == Integer.parseInt((String) tbModel.getValueAt(0, i))) {
-//                    JOptionPane.showMessageDialog(null, "A");
-//                    jmlhBarang += tbModel.getValueAt(3, i);
-//                    totalHarga = Integer.parseInt(TotalHargaBarang.getText()) + Integer.parseInt((String) tbModel.getValueAt(4, i));
-//                    tbModel.setValueAt(jmlhBarang, 3, i);
-//                    tbModel.setValueAt(Integer.toString(totalHarga), 4, i);
-//                    addData = false;
-//                } else {
-//                    JOptionPane.showMessageDialog(null, "B");
-//                    addData = true;
-//                }
-//            }
-//        }
-//        JOptionPane.showMessageDialog(null, addData);
-//        if (addData) {
-//            JOptionPane.showMessageDialog(null, "TES");TES
-//            String[] tbData = {idBarang, NamaBarang.getText(), TotalHargaBarang.getText(), jmlhBarang, Integer.toString(totalHarga)};
-//            tbModel.addRow(tbData);
-//        }
-//        totalTransaksi += Integer.parseInt(TotalHargaBarang.getText());
-//        TotalTransaksi.setText(Integer.toString(totalTransaksi));
-//        for (int i = 0; i < lenght; i++) {
-//            try {
-//                int totalHarga = Integer.parseInt(TotalHargaBarang.getText());
-//                if (tbModel.getValueAt(0, i) == idBarang) {
-//                    jmlhBarang += tbModel.getValueAt(3, i);
-//                    totalHarga = Integer.parseInt(TotalHargaBarang.getText()) + Integer.parseInt((String) tbModel.getValueAt(4, i));
-//                }
-//                String[] tbData = {idBarang, NamaBarang.getText(), TotalHargaBarang.getText(), jmlhBarang, Integer.toString(totalHarga)};
-//                totalTransaksi += Integer.parseInt(TotalHargaBarang.getText());
-//                tbModel.addRow(tbData);
-//                TotalTransaksi.setText(Integer.toString(totalTransaksi));
-//            } catch (Exception e) {
-//                JOptionPane.showMessageDialog(null, e);
-//            }
         String[] tbData = {idBarang, NamaBarang.getText(), TotalHargaBarang.getText(), jmlhBarang, TotalHargaBarang.getText(), "Hapus?"};
         tbModel.addRow(tbData);
         totalTransaksi += Integer.parseInt(TotalHargaBarang.getText());
@@ -635,7 +592,6 @@ public class Transaksi extends javax.swing.JFrame {
             while (rs.next()) {
                 idTransaksi = rs.getString("id");
             }
-//            JOptionPane.showMessageDialog(null, rs.getString("id"));
 
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
@@ -764,9 +720,7 @@ public class Transaksi extends javax.swing.JFrame {
         int totalRow = tb.getRowCount();
         int col = tb.findColumn("nama");
         for (int i = 0; i < totalRow; i++) {
-//            JOptionPane.showMessageDialog(null, tb.getValueAt(i, col).toString().toLowerCase());
             if (tb.getValueAt(i, col).toString().toLowerCase().equals(NamaBarang.getText().toLowerCase())) {
-//                JOptionPane.showMessageDialog(null, tb.getValueAt(i, tb.findColumn("Id")).toString().toLowerCase());
                 NamaBarang.setText(tb.getValueAt(i, tb.findColumn("nama")).toString().toLowerCase());
                 Harga.setText(tb.getValueAt(i, tb.findColumn("harga")).toString().toLowerCase());
                 stok = (int) tb.getValueAt(i, tb.findColumn("stok"));
@@ -792,11 +746,8 @@ public class Transaksi extends javax.swing.JFrame {
 
         DefaultTableModel tb = (DefaultTableModel) jTable2.getModel();
         for (int i = 0; i < tb.getRowCount(); i++) {
-//                JOptionPane.showMessageDialog(null, tb.getValueAt(i, 2));
-//                JOptionPane.showMessageDialog(null, tb.getValueAt(i, 0) + " "+ idBarang);
             if (idBarang.equals((String) tb.getValueAt(i, 0))) {
                 stok = Integer.parseInt((String) tb.getValueAt(i, 2));
-//                JOptionPane.showMessageDialog(null, stok + " " + idBarang);
                 break;
             }
         }

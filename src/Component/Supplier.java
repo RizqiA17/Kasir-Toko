@@ -402,7 +402,6 @@ public class Supplier extends javax.swing.JPanel {
         int col = tb.findColumn("Kode");
         int totalRow = tb.getRowCount();
         for (int i = 0; i < totalRow; i++) {
-            //            JOptionPane.showMessageDialog(null, tb.getValueAt(i, col).toString().toLowerCase());
             if (tb.getValueAt(i, col).toString().toLowerCase().equals(KodeSupplier.getText().toLowerCase())) {
                 //                JOptionPane.showMessageDialog(null, tb.getValueAt(i, tb.findColumn("Id")).toString().toLowerCase());
                 Nama.setText(tb.getValueAt(i, tb.findColumn("Nama")).toString());
